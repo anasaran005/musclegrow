@@ -1,0 +1,68 @@
+[
+  {
+    "day": "Mon",
+    "boxId": "box-mon",
+    "boxSlug": "power-chicken-box",
+    "boxName": "Power Chicken Box",
+    "price": 299,
+    "calories": 695,
+    "protein": 60,
+    "isVeg": false,
+    "tag": "Kongu Pepper Chicken"
+  },
+  {
+    "day": "Tue",
+    "boxId": "box-tue",
+    "boxSlug": "paneer-balance-box",
+    "boxName": "Paneer Balance Box",
+    "price": 269,
+    "calories": 685,
+    "protein": 42,
+    "isVeg": true,
+    "tag": "Paneer Bhurji & Ragi Dosa"
+  },
+  {
+    "day": "Wed",
+    "boxId": "box-wed",
+    "boxSlug": "lean-fish-box",
+    "boxName": "Lean Fish Box",
+    "price": 279,
+    "calories": 695,
+    "protein": 56,
+    "isVeg": false,
+    "tag": "Tawa Masala Fish & Brown Rice"
+  },
+  {
+    "day": "Thu",
+    "boxId": "box-thu",
+    "boxSlug": "tikka-chicken-box",
+    "boxName": "Tikka Chicken Box",
+    "price": 299,
+    "calories": 720,
+    "protein": 63,
+    "isVeg": false,
+    "tag": "Chicken Tikka & Peanut Sundal"
+  },
+  {
+    "day": "Fri",
+    "boxId": "box-fri",
+    "boxSlug": "soya-strong-box",
+    "boxName": "Soya Strong Box",
+    "price": 269,
+    "calories": 715,
+    "protein": 51,
+    "isVeg": true,
+    "tag": "Soya Pepper Fry & Masala Oats"
+  },
+  {
+    "day": "Sat",
+    "boxId": "box-sat",
+    "boxSlug": "paneer-tikka-box",
+    "boxName": "Paneer Tikka Box",
+    "price": 269,
+    "calories": 725,
+    "protein": 43,
+    "isVeg": true,
+    "tag": "Paneer Tikka & Millet Rice"
+  }
+]

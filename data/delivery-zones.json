@@ -1,0 +1,86 @@
+[
+  {
+    "pincode": "641002",
+    "area": "RS Puram",
+    "isDeliverable": true,
+    "avgDeliveryMinutes": 25,
+    "slots": ["12:00 PM - 1:30 PM", "7:00 PM - 8:30 PM"]
+  },
+  {
+    "pincode": "641011",
+    "area": "Saibaba Colony",
+    "isDeliverable": true,
+    "avgDeliveryMinutes": 25,
+    "slots": ["12:00 PM - 1:30 PM", "7:00 PM - 8:30 PM"]
+  },
+  {
+    "pincode": "641004",
+    "area": "Peelamedu",
+    "isDeliverable": true,
+    "avgDeliveryMinutes": 30,
+    "slots": ["12:00 PM - 1:30 PM", "7:00 PM - 8:30 PM"]
+  },
+  {
+    "pincode": "641012",
+    "area": "Gandhipuram",
+    "isDeliverable": true,
+    "avgDeliveryMinutes": 20,
+    "slots": ["12:00 PM - 1:30 PM", "7:00 PM - 8:30 PM"]
+  },
+  {
+    "pincode": "641018",
+    "area": "Race Course",
+    "isDeliverable": true,
+    "avgDeliveryMinutes": 20,
+    "slots": ["12:00 PM - 1:30 PM", "7:00 PM - 8:30 PM"]
+  },
+  {
+    "pincode": "641005",
+    "area": "Singanallur",
+    "isDeliverable": true,
+    "avgDeliveryMinutes": 35,
+    "slots": ["12:00 PM - 1:30 PM", "7:00 PM - 8:30 PM"]
+  },
+  {
+    "pincode": "641041",
+    "area": "Vadavalli",
+    "isDeliverable": true,
+    "avgDeliveryMinutes": 35,
+    "slots": ["12:00 PM - 1:30 PM", "7:00 PM - 8:30 PM"]
+  },
+  {
+    "pincode": "641035",
+    "area": "Saravanampatti (IT Corridor)",
+    "isDeliverable": true,
+    "avgDeliveryMinutes": 40,
+    "slots": ["12:00 PM - 1:30 PM", "7:00 PM - 8:30 PM"]
+  },
+  {
+    "pincode": "641006",
+    "area": "Ganapathy",
+    "isDeliverable": true,
+    "avgDeliveryMinutes": 30,
+    "slots": ["12:00 PM - 1:30 PM", "7:00 PM - 8:30 PM"]
+  },
+  {
+    "pincode": "641008",
+    "area": "Kuniyamuthur",
+    "isDeliverable": true,
+    "avgDeliveryMinutes": 35,
+    "slots": ["12:00 PM - 1:30 PM", "7:00 PM - 8:30 PM"]
+  },
+  {
+    "pincode": "641045",
+    "area": "Ramanathapuram",
+    "isDeliverable": true,
+    "avgDeliveryMinutes": 25,
+    "slots": ["12:00 PM - 1:30 PM", "7:00 PM - 8:30 PM"]
+  },
+  {
+    "pincode": "641014",
+    "area": "Hopes College / Civil Aerodrome",
+    "isDeliverable": true,
+    "avgDeliveryMinutes": 35,
+    "slots": ["12:00 PM - 1:30 PM", "7:00 PM - 8:30 PM"]
+  }
+]

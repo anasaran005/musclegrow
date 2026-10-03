@@ -1,0 +1,578 @@
+[
+  {
+    "id": "box-mon",
+    "slug": "power-chicken-box",
+    "name": "Power Chicken Box",
+    "day": "Mon",
+    "image": "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?auto=format&fit=crop&w=800&q=80",
+    "images": [
+      "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?auto=format&fit=crop&w=800&q=80",
+      "https://images.unsplash.com/photo-1626777552726-4a6b54c97e46?auto=format&fit=crop&w=800&q=80",
+      "https://images.unsplash.com/photo-1582722872445-44dc5f7e3c8f?auto=format&fit=crop&w=800&q=80"
+    ],
+    "description": "Kongu black pepper spiced country chicken, soft whole wheat chapatis, fresh garden kachumber, mineral-rich brown channa sundal, and 2 boiled farm eggs.",
+    "isVeg": false,
+    "containsEgg": true,
+    "tags": ["High Protein", "Chicken", "Gelatin-free", "Lab Verification Pending"],
+    "allergens": ["Gluten (Chapati)", "Egg"],
+    "freeFrom": ["Gelatin-free", "Dairy-free", "Refined sugar-free"],
+    "price": 299,
+    "totals": {
+      "calories": 695,
+      "protein": 60,
+      "carbs": 53,
+      "fat": 25,
+      "fiber": 9,
+      "weightG": 500
+    },
+    "items": [
+      {
+        "type": "main",
+        "name": "Kongu Pepper Chicken",
+        "grams": 180,
+        "calories": 310,
+        "protein": 42,
+        "carbs": 6,
+        "fat": 12,
+        "image": "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?auto=format&fit=crop&w=400&q=80"
+      },
+      {
+        "type": "salad",
+        "name": "Fresh Kachumber Slaw",
+        "grams": 80,
+        "calories": 35,
+        "protein": 1,
+        "carbs": 7,
+        "fat": 0.5,
+        "image": "https://images.unsplash.com/photo-1540420773420-3366772f4999?auto=format&fit=crop&w=400&q=80"
+      },
+      {
+        "type": "egg",
+        "name": "2 Boiled Farm Eggs",
+        "grams": 100,
+        "calories": 140,
+        "protein": 12,
+        "carbs": 1,
+        "fat": 10,
+        "image": "https://images.unsplash.com/photo-1582722872445-44dc5f7e3c8f?auto=format&fit=crop&w=400&q=80"
+      },
+      {
+        "type": "carb",
+        "name": "Whole Wheat Chapati (2 pcs)",
+        "grams": 70,
+        "calories": 130,
+        "protein": 4,
+        "carbs": 26,
+        "fat": 1.5,
+        "image": "https://images.unsplash.com/photo-1626777552726-4a6b54c97e46?auto=format&fit=crop&w=400&q=80"
+      },
+      {
+        "type": "legume",
+        "name": "Brown Channa Sundal",
+        "grams": 70,
+        "calories": 80,
+        "protein": 5,
+        "carbs": 13,
+        "fat": 1,
+        "image": "https://images.unsplash.com/photo-1585937421612-70a008356fbe?auto=format&fit=crop&w=400&q=80"
+      }
+    ],
+    "benefits": [
+      "42g slow-cooked lean country chicken breast for sustained muscle protein synthesis",
+      "Low GI complex carbs from stoneground whole wheat chapatis",
+      "Essential choline, vitamin B12 & amino acid balance from double farm eggs"
+    ],
+    "eggFreeVersion": {
+      "description": "Replaces 2 boiled eggs with an extra portion of tender Brown Channa Sundal (+80g)",
+      "extraLegumeName": "Extra Brown Channa Sundal",
+      "price": 299,
+      "calories": 680,
+      "protein": 54,
+      "carbs": 68,
+      "fat": 16
+    },
+    "suggestedSides": ["side-grilled-chicken", "side-chicken-salad"],
+    "suggestedAddons": ["drink-beetroot", "drink-cucumber-mint"],
+    "labVerifiedNote": "Estimated nutrition metrics based on raw pre-cook weights. Lab verification certificate pending batch release."
+  },
+  {
+    "id": "box-tue",
+    "slug": "paneer-balance-box",
+    "name": "Paneer Balance Box",
+    "day": "Tue",
+    "image": "https://images.unsplash.com/photo-1631452180519-c014fe946bc7?auto=format&fit=crop&w=800&q=80",
+    "images": [
+      "https://images.unsplash.com/photo-1631452180519-c014fe946bc7?auto=format&fit=crop&w=800&q=80",
+      "https://images.unsplash.com/photo-1668236543090-82eba5ee5976?auto=format&fit=crop&w=800&q=80",
+      "https://images.unsplash.com/photo-1512621776951-a57141f2eefd?auto=format&fit=crop&w=800&q=80"
+    ],
+    "description": "Fresh farm paneer bhurji with turmeric and ginger, mineral-dense ragi dosas, vibrant beet-carrot slaw, white channa sundal, and 2 boiled eggs.",
+    "isVeg": true,
+    "containsEgg": true,
+    "tags": ["High Protein", "Vegetarian", "Gelatin-free", "Lab Verification Pending"],
+    "allergens": ["Dairy (Paneer)", "Egg"],
+    "freeFrom": ["Gelatin-free", "Gluten-free", "Refined sugar-free"],
+    "price": 269,
+    "totals": {
+      "calories": 685,
+      "protein": 42,
+      "carbs": 58,
+      "fat": 32,
+      "fiber": 10,
+      "weightG": 500
+    },
+    "items": [
+      {
+        "type": "main",
+        "name": "Farm Paneer Bhurji",
+        "grams": 160,
+        "calories": 280,
+        "protein": 22,
+        "carbs": 5,
+        "fat": 19,
+        "image": "https://images.unsplash.com/photo-1631452180519-c014fe946bc7?auto=format&fit=crop&w=400&q=80"
+      },
+      {
+        "type": "salad",
+        "name": "Beet-Carrot Slaw",
+        "grams": 80,
+        "calories": 40,
+        "protein": 1,
+        "carbs": 9,
+        "fat": 0.5,
+        "image": "https://images.unsplash.com/photo-1512621776951-a57141f2eefd?auto=format&fit=crop&w=400&q=80"
+      },
+      {
+        "type": "egg",
+        "name": "2 Boiled Farm Eggs",
+        "grams": 100,
+        "calories": 140,
+        "protein": 12,
+        "carbs": 1,
+        "fat": 10,
+        "image": "https://images.unsplash.com/photo-1582722872445-44dc5f7e3c8f?auto=format&fit=crop&w=400&q=80"
+      },
+      {
+        "type": "carb",
+        "name": "Ragi Dosa (2 pcs)",
+        "grams": 90,
+        "calories": 145,
+        "protein": 3,
+        "carbs": 29,
+        "fat": 2,
+        "image": "https://images.unsplash.com/photo-1668236543090-82eba5ee5976?auto=format&fit=crop&w=400&q=80"
+      },
+      {
+        "type": "legume",
+        "name": "White Channa Sundal",
+        "grams": 70,
+        "calories": 80,
+        "protein": 4,
+        "carbs": 14,
+        "fat": 1,
+        "image": "https://images.unsplash.com/photo-1546833999-b9f581a1996d?auto=format&fit=crop&w=400&q=80"
+      }
+    ],
+    "benefits": [
+      "Rich whole dairy casein & whey protein providing long-lasting daytime satiety",
+      "Calcium and iron loaded finger millet (ragi) dough with natural fermentation",
+      "High nitrate raw beets to support healthy blood pressure and nitric oxide"
+    ],
+    "eggFreeVersion": {
+      "description": "Replaces 2 boiled eggs with an extra portion of White Channa Sundal (+80g)",
+      "extraLegumeName": "Extra White Channa Sundal",
+      "price": 269,
+      "calories": 665,
+      "protein": 35,
+      "carbs": 74,
+      "fat": 23
+    },
+    "suggestedSides": ["side-grilled-paneer", "side-paneer-post-workout"],
+    "suggestedAddons": ["drink-carrot", "drink-cucumber-mint"],
+    "labVerifiedNote": "Estimated nutrition metrics based on raw pre-cook weights. Lab verification certificate pending batch release."
+  },
+  {
+    "id": "box-wed",
+    "slug": "lean-fish-box",
+    "name": "Lean Fish Box",
+    "day": "Wed",
+    "image": "https://images.unsplash.com/photo-1519708227418-c8fd9a32b7a2?auto=format&fit=crop&w=800&q=80",
+    "images": [
+      "https://images.unsplash.com/photo-1519708227418-c8fd9a32b7a2?auto=format&fit=crop&w=800&q=80",
+      "https://images.unsplash.com/photo-1516684732162-798a0062be99?auto=format&fit=crop&w=800&q=80",
+      "https://images.unsplash.com/photo-1582722872445-44dc5f7e3c8f?auto=format&fit=crop&w=800&q=80"
+    ],
+    "description": "Pan-seared tawa masala sea fish fillet, steamed high-fiber brown rice, live sprout salad, iron-rich brown channa, and 2 boiled eggs.",
+    "isVeg": false,
+    "containsEgg": true,
+    "tags": ["High Protein", "Fish", "Omega-3", "Gelatin-free", "Lab Verification Pending"],
+    "allergens": ["Fish", "Egg"],
+    "freeFrom": ["Gelatin-free", "Dairy-free", "Gluten-free"],
+    "price": 279,
+    "totals": {
+      "calories": 695,
+      "protein": 56,
+      "carbs": 65,
+      "fat": 23,
+      "fiber": 8,
+      "weightG": 510
+    },
+    "items": [
+      {
+        "type": "main",
+        "name": "Tawa Masala Fish Fillet",
+        "grams": 170,
+        "calories": 250,
+        "protein": 35,
+        "carbs": 4,
+        "fat": 10,
+        "image": "https://images.unsplash.com/photo-1519708227418-c8fd9a32b7a2?auto=format&fit=crop&w=400&q=80"
+      },
+      {
+        "type": "salad",
+        "name": "Active Sprout Salad",
+        "grams": 80,
+        "calories": 50,
+        "protein": 3,
+        "carbs": 9,
+        "fat": 0.5,
+        "image": "https://images.unsplash.com/photo-1540420773420-3366772f4999?auto=format&fit=crop&w=400&q=80"
+      },
+      {
+        "type": "egg",
+        "name": "2 Boiled Farm Eggs",
+        "grams": 100,
+        "calories": 140,
+        "protein": 12,
+        "carbs": 1,
+        "fat": 10,
+        "image": "https://images.unsplash.com/photo-1582722872445-44dc5f7e3c8f?auto=format&fit=crop&w=400&q=80"
+      },
+      {
+        "type": "carb",
+        "name": "Steamed Brown Rice",
+        "grams": 130,
+        "calories": 175,
+        "protein": 2,
+        "carbs": 37,
+        "fat": 1.5,
+        "image": "https://images.unsplash.com/photo-1516684732162-798a0062be99?auto=format&fit=crop&w=400&q=80"
+      },
+      {
+        "type": "legume",
+        "name": "Brown Channa Sundal",
+        "grams": 70,
+        "calories": 80,
+        "protein": 4,
+        "carbs": 14,
+        "fat": 1,
+        "image": "https://images.unsplash.com/photo-1585937421612-70a008356fbe?auto=format&fit=crop&w=400&q=80"
+      }
+    ],
+    "benefits": [
+      "Natural EPA & DHA Omega-3 fatty acids for joint recovery and heart wellness",
+      "Ultra-lean sea fish protein with near-zero saturated fat content",
+      "Live sprouted moong enzyme boost supporting smooth digestive breakdown"
+    ],
+    "eggFreeVersion": {
+      "description": "Replaces 2 boiled eggs with an extra portion of Brown Channa Sundal (+80g)",
+      "extraLegumeName": "Extra Brown Channa Sundal",
+      "price": 279,
+      "calories": 675,
+      "protein": 49,
+      "carbs": 80,
+      "fat": 14
+    },
+    "suggestedSides": ["side-grilled-chicken", "side-chicken-salad"],
+    "suggestedAddons": ["drink-orange", "drink-cucumber-mint"],
+    "labVerifiedNote": "Estimated nutrition metrics based on raw pre-cook weights. Lab verification certificate pending batch release."
+  },
+  {
+    "id": "box-thu",
+    "slug": "tikka-chicken-box",
+    "name": "Tikka Chicken Box",
+    "day": "Thu",
+    "image": "https://images.unsplash.com/photo-1626777552726-4a6b54c97e46?auto=format&fit=crop&w=800&q=80",
+    "images": [
+      "https://images.unsplash.com/photo-1626777552726-4a6b54c97e46?auto=format&fit=crop&w=800&q=80",
+      "https://images.unsplash.com/photo-1567620832903-9fc6debc209f?auto=format&fit=crop&w=800&q=80",
+      "https://images.unsplash.com/photo-1582722872445-44dc5f7e3c8f?auto=format&fit=crop&w=800&q=80"
+    ],
+    "description": "Smokey clay-baked chicken breast tikka, whole wheat phulkas, crunchy corn-capsicum salad, roasted peanut sundal, and 2 boiled eggs.",
+    "isVeg": false,
+    "containsEgg": true,
+    "tags": ["High Protein", "Chicken", "Gelatin-free", "Lab Verification Pending"],
+    "allergens": ["Gluten (Chapati)", "Peanuts", "Egg"],
+    "freeFrom": ["Gelatin-free", "Dairy-free", "Refined sugar-free"],
+    "price": 299,
+    "totals": {
+      "calories": 720,
+      "protein": 63,
+      "carbs": 48,
+      "fat": 31,
+      "fiber": 8,
+      "weightG": 490
+    },
+    "items": [
+      {
+        "type": "main",
+        "name": "Clay-Oven Chicken Tikka",
+        "grams": 180,
+        "calories": 300,
+        "protein": 42,
+        "carbs": 5,
+        "fat": 12,
+        "image": "https://images.unsplash.com/photo-1626777552726-4a6b54c97e46?auto=format&fit=crop&w=400&q=80"
+      },
+      {
+        "type": "salad",
+        "name": "Corn-Capsicum Crunch",
+        "grams": 80,
+        "calories": 45,
+        "protein": 1,
+        "carbs": 10,
+        "fat": 0.5,
+        "image": "https://images.unsplash.com/photo-1512621776951-a57141f2eefd?auto=format&fit=crop&w=400&q=80"
+      },
+      {
+        "type": "egg",
+        "name": "2 Boiled Farm Eggs",
+        "grams": 100,
+        "calories": 140,
+        "protein": 12,
+        "carbs": 1,
+        "fat": 10,
+        "image": "https://images.unsplash.com/photo-1582722872445-44dc5f7e3c8f?auto=format&fit=crop&w=400&q=80"
+      },
+      {
+        "type": "carb",
+        "name": "Whole Wheat Chapati (2 pcs)",
+        "grams": 70,
+        "calories": 130,
+        "protein": 4,
+        "carbs": 26,
+        "fat": 1.5,
+        "image": "https://images.unsplash.com/photo-1626777552726-4a6b54c97e46?auto=format&fit=crop&w=400&q=80"
+      },
+      {
+        "type": "legume",
+        "name": "Roasted Peanut Sundal",
+        "grams": 50,
+        "calories": 105,
+        "protein": 4,
+        "carbs": 6,
+        "fat": 7.5,
+        "image": "https://images.unsplash.com/photo-1585937421612-70a008356fbe?auto=format&fit=crop&w=400&q=80"
+      }
+    ],
+    "benefits": [
+      "Peak 63g complete protein load engineered for serious strength recovery",
+      "Roasted groundnuts supply healthy monounsaturated fats and natural resveratrol",
+      "Zero added food coloring or heavy cream in the tikka marinade"
+    ],
+    "eggFreeVersion": {
+      "description": "Replaces 2 boiled eggs with an extra portion of Roasted Peanut Sundal (+60g)",
+      "extraLegumeName": "Extra Peanut Sundal",
+      "price": 299,
+      "calories": 710,
+      "protein": 56,
+      "carbs": 55,
+      "fat": 30
+    },
+    "suggestedSides": ["side-chicken-post-workout", "side-chicken-salad"],
+    "suggestedAddons": ["drink-beetroot", "drink-orange"],
+    "labVerifiedNote": "Estimated nutrition metrics based on raw pre-cook weights. Lab verification certificate pending batch release."
+  },
+  {
+    "id": "box-fri",
+    "slug": "soya-strong-box",
+    "name": "Soya Strong Box",
+    "day": "Fri",
+    "image": "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?auto=format&fit=crop&w=800&q=80",
+    "images": [
+      "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?auto=format&fit=crop&w=800&q=80",
+      "https://images.unsplash.com/photo-1584947926176-7caeb8aef7cb?auto=format&fit=crop&w=800&q=80",
+      "https://images.unsplash.com/photo-1582722872445-44dc5f7e3c8f?auto=format&fit=crop&w=800&q=80"
+    ],
+    "description": "Tender soya chunks stir-fried with black pepper, cooling mint-cucumber curd, savory vegetable masala rolled oats, white channa sundal, and 2 boiled eggs.",
+    "isVeg": true,
+    "containsEgg": true,
+    "tags": ["High Protein", "Plant-Forward", "Gelatin-free", "Lab Verification Pending"],
+    "allergens": ["Soy", "Dairy (Curd)", "Egg"],
+    "freeFrom": ["Gelatin-free", "Meat-free", "Refined sugar-free"],
+    "price": 269,
+    "totals": {
+      "calories": 715,
+      "protein": 51,
+      "carbs": 68,
+      "fat": 26,
+      "fiber": 12,
+      "weightG": 510
+    },
+    "items": [
+      {
+        "type": "main",
+        "name": "Soya Pepper Fry",
+        "grams": 160,
+        "calories": 250,
+        "protein": 30,
+        "carbs": 14,
+        "fat": 8,
+        "image": "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?auto=format&fit=crop&w=400&q=80"
+      },
+      {
+        "type": "salad",
+        "name": "Mint-Cucumber Curd Raita",
+        "grams": 90,
+        "calories": 60,
+        "protein": 2,
+        "carbs": 5,
+        "fat": 3.5,
+        "image": "https://images.unsplash.com/photo-1540420773420-3366772f4999?auto=format&fit=crop&w=400&q=80"
+      },
+      {
+        "type": "egg",
+        "name": "2 Boiled Farm Eggs",
+        "grams": 100,
+        "calories": 140,
+        "protein": 12,
+        "carbs": 1,
+        "fat": 10,
+        "image": "https://images.unsplash.com/photo-1582722872445-44dc5f7e3c8f?auto=format&fit=crop&w=400&q=80"
+      },
+      {
+        "type": "carb",
+        "name": "Savory Veg Masala Oats",
+        "grams": 130,
+        "calories": 185,
+        "protein": 3,
+        "carbs": 34,
+        "fat": 3.5,
+        "image": "https://images.unsplash.com/photo-1584947926176-7caeb8aef7cb?auto=format&fit=crop&w=400&q=80"
+      },
+      {
+        "type": "legume",
+        "name": "White Channa Sundal",
+        "grams": 70,
+        "calories": 80,
+        "protein": 4,
+        "carbs": 14,
+        "fat": 1,
+        "image": "https://images.unsplash.com/photo-1546833999-b9f581a1996d?auto=format&fit=crop&w=400&q=80"
+      }
+    ],
+    "benefits": [
+      "Dense plant-based BCAAs from non-GMO defatted soy isolate",
+      "Beta-glucan prebiotic soluble fiber from slow-cooked wholegrain rolled oats",
+      "Cooling live probiotic curd culture to maintain gut biome balance"
+    ],
+    "eggFreeVersion": {
+      "description": "Replaces 2 boiled eggs with an extra portion of White Channa Sundal (+80g)",
+      "extraLegumeName": "Extra White Channa Sundal",
+      "price": 269,
+      "calories": 690,
+      "protein": 44,
+      "carbs": 83,
+      "fat": 17
+    },
+    "suggestedSides": ["side-paneer-post-workout", "side-grilled-paneer"],
+    "suggestedAddons": ["drink-carrot", "drink-cucumber-mint"],
+    "labVerifiedNote": "Estimated nutrition metrics based on raw pre-cook weights. Lab verification certificate pending batch release."
+  },
+  {
+    "id": "box-sat",
+    "slug": "paneer-tikka-box",
+    "name": "Paneer Tikka Box",
+    "day": "Sat",
+    "image": "https://images.unsplash.com/photo-1567188040759-fb8a883dc6d8?auto=format&fit=crop&w=800&q=80",
+    "images": [
+      "https://images.unsplash.com/photo-1567188040759-fb8a883dc6d8?auto=format&fit=crop&w=800&q=80",
+      "https://images.unsplash.com/photo-1516684732162-798a0062be99?auto=format&fit=crop&w=800&q=80",
+      "https://images.unsplash.com/photo-1582722872445-44dc5f7e3c8f?auto=format&fit=crop&w=800&q=80"
+    ],
+    "description": "Char-grilled tandoori spiced paneer cubes, nutritious foxtail millet rice, crisp tomato-cabbage-pepper slaw, brown channa sundal, and 2 boiled eggs.",
+    "isVeg": true,
+    "containsEgg": true,
+    "tags": ["High Protein", "Vegetarian", "Millet", "Gelatin-free", "Lab Verification Pending"],
+    "allergens": ["Dairy (Paneer)", "Egg"],
+    "freeFrom": ["Gelatin-free", "Gluten-free", "Refined sugar-free"],
+    "price": 269,
+    "totals": {
+      "calories": 725,
+      "protein": 43,
+      "carbs": 61,
+      "fat": 35,
+      "fiber": 9,
+      "weightG": 510
+    },
+    "items": [
+      {
+        "type": "main",
+        "name": "Char-Grilled Paneer Tikka",
+        "grams": 160,
+        "calories": 300,
+        "protein": 22,
+        "carbs": 5,
+        "fat": 22,
+        "image": "https://images.unsplash.com/photo-1567188040759-fb8a883dc6d8?auto=format&fit=crop&w=400&q=80"
+      },
+      {
+        "type": "salad",
+        "name": "Tomato-Pepper-Cabbage Slaw",
+        "grams": 80,
+        "calories": 35,
+        "protein": 1,
+        "carbs": 7,
+        "fat": 0.5,
+        "image": "https://images.unsplash.com/photo-1512621776951-a57141f2eefd?auto=format&fit=crop&w=400&q=80"
+      },
+      {
+        "type": "egg",
+        "name": "2 Boiled Farm Eggs",
+        "grams": 100,
+        "calories": 140,
+        "protein": 12,
+        "carbs": 1,
+        "fat": 10,
+        "image": "https://images.unsplash.com/photo-1582722872445-44dc5f7e3c8f?auto=format&fit=crop&w=400&q=80"
+      },
+      {
+        "type": "carb",
+        "name": "Foxtail Millet Rice",
+        "grams": 130,
+        "calories": 170,
+        "protein": 4,
+        "carbs": 34,
+        "fat": 1.5,
+        "image": "https://images.unsplash.com/photo-1516684732162-798a0062be99?auto=format&fit=crop&w=400&q=80"
+      },
+      {
+        "type": "legume",
+        "name": "Brown Channa Sundal",
+        "grams": 70,
+        "calories": 80,
+        "protein": 4,
+        "carbs": 14,
+        "fat": 1,
+        "image": "https://images.unsplash.com/photo-1585937421612-70a008356fbe?auto=format&fit=crop&w=400&q=80"
+      }
+    ],
+    "benefits": [
+      "Weekend celebration meal: bold tandoori spices with zero refined fats or food coloring",
+      "Low glycemic foxtail millets that prevent post-meal sluggishness and blood sugar spikes",
+      "Double egg boost providing full spectrum amino acids and lutein"
+    ],
+    "eggFreeVersion": {
+      "description": "Replaces 2 boiled eggs with an extra portion of Brown Channa Sundal (+80g)",
+      "extraLegumeName": "Extra Brown Channa Sundal",
+      "price": 269,
+      "calories": 705,
+      "protein": 36,
+      "carbs": 76,
+      "fat": 26
+    },
+    "suggestedSides": ["side-grilled-paneer", "side-paneer-salad"],
+    "suggestedAddons": ["drink-beetroot", "drink-cucumber-mint"],
+    "labVerifiedNote": "Estimated nutrition metrics based on raw pre-cook weights. Lab verification certificate pending batch release."
+  }
+]

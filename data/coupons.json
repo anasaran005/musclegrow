@@ -1,0 +1,26 @@
+[
+  {
+    "code": "GRAMFIRST",
+    "discountType": "flat",
+    "discountValue": 250,
+    "minOrderValue": 1000,
+    "description": "Flat ₹250 off your first weekly meal subscription",
+    "maxDiscount": 250
+  },
+  {
+    "code": "PROTEIN50",
+    "discountType": "percentage",
+    "discountValue": 10,
+    "minOrderValue": 3000,
+    "description": "10% off on all monthly plans (up to ₹600)",
+    "maxDiscount": 600
+  },
+  {
+    "code": "FITCBE",
+    "discountType": "flat",
+    "discountValue": 150,
+    "minOrderValue": 1500,
+    "description": "Coimbatore fitness community special ₹150 off",
+    "maxDiscount": 150
+  }
+]

@@ -1,0 +1,76 @@
+[
+  {
+    "id": "plan-6day-weekly",
+    "slug": "6-day-weekly",
+    "name": "6-Day Weekly Plan",
+    "tagline": "One fixed measured protein box every day (Mon-Sat, Sunday off).",
+    "mealsPerDay": 1,
+    "dailyProteinTarget": "42g - 63g",
+    "dailyCaloriesTarget": "685 - 725 kcal",
+    "weeklyPrice": 1532,
+    "monthlyPrice": 6060,
+    "pricePerMealWeekly": 255,
+    "pricePerMealMonthly": 252,
+    "oneOffComparePrice": 310,
+    "isPopular": false,
+    "description": "Perfect for busy professionals in Coimbatore. One daily box cooked fresh each morning, matching the fixed kitchen cook schedule.",
+    "idealFor": ["Office lunches", "Busy evenings", "First-time subscribers"],
+    "features": [
+      "1 box/day following fixed Mon-Sat rotation (Sunday kitchen closed)",
+      "Daily calories & protein printed on every box",
+      "Egg-free & legume customizations saved to your profile",
+      "9:00 PM previous-night cutoff for zero food waste",
+      "Free doorstep delivery across Coimbatore"
+    ]
+  },
+  {
+    "id": "plan-12meal-weekly",
+    "slug": "12-meal-weekly",
+    "name": "12-Meal Weekly Plan",
+    "tagline": "Complete lunch + dinner daily nutrition with 10% weekly discount.",
+    "mealsPerDay": 2,
+    "dailyProteinTarget": "85g - 126g",
+    "dailyCaloriesTarget": "1370 - 1450 kcal",
+    "weeklyPrice": 3030,
+    "monthlyPrice": 12120,
+    "pricePerMealWeekly": 252,
+    "pricePerMealMonthly": 252,
+    "oneOffComparePrice": 310,
+    "isPopular": true,
+    "badge": "Most Popular",
+    "description": "Our most popular operational plan: 2 boxes per day (Lunch & Dinner). Eat the scheduled day box twice or pair with an alternate day box.",
+    "idealFor": ["Active gym goers", "Busy founders & techies", "Muscle gain seekers"],
+    "features": [
+      "2 boxes/day (Lunch 12:00-1:30 PM & Dinner 7:00-8:30 PM)",
+      "10% built-in subscription discount",
+      "Customizable egg-free or extra side add-on bundles",
+      "Pause or skip any day up to 9 PM night before",
+      "Dedicated WhatsApp nutritionist support"
+    ]
+  },
+  {
+    "id": "plan-24day-monthly",
+    "slug": "24-day-monthly",
+    "name": "24-Day Monthly Plan",
+    "tagline": "Full month consistent habit: 24 cooking-free days with maximum savings.",
+    "mealsPerDay": 1,
+    "dailyProteinTarget": "42g - 63g",
+    "dailyCaloriesTarget": "685 - 725 kcal",
+    "weeklyPrice": 1532,
+    "monthlyPrice": 6060,
+    "pricePerMealWeekly": 255,
+    "pricePerMealMonthly": 252,
+    "oneOffComparePrice": 310,
+    "isPopular": false,
+    "badge": "Best Value",
+    "description": "Lock in 4 full weeks of predictable, lab-calibrated nutrition. UPI AutoPay supported with single-tap pause whenever you travel.",
+    "idealFor": ["Monthly habit builders", "Corporate meal prep", "Long-term fitness goals"],
+    "features": [
+      "24 daily boxes delivered across 4 working weeks",
+      "Maximum 10% monthly discount applied",
+      "Roll over skipped days without losing payment",
+      "Weekly add-on juice or side bundle eligible",
+      "Free doorstep delivery across Coimbatore"
+    ]
+  }
+]

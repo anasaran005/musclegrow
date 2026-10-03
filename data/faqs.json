@@ -1,0 +1,32 @@
+[
+  {
+    "id": "faq-1",
+    "question": "How are your calories and protein measured?",
+    "answer": "Every recipe is developed with exact raw ingredient weighing in our central kitchen. We weigh portions with commercial digital scales during plating. The numbers on our labels are precise dietary approximations (within ±5-8% natural variance) and are being submitted for accredited NABL lab nutritional analysis."
+  },
+  {
+    "id": "faq-2",
+    "question": "What are your delivery slots and cutoff timings in Coimbatore?",
+    "answer": "We deliver Monday through Saturday (6 days a week, Sunday kitchen deep clean). Lunch is delivered between 12:00 PM – 1:30 PM, and Dinner between 7:00 PM – 8:30 PM. To ensure zero food wastage and farm-fresh procurement, meal swaps or pauses must be submitted by 9:00 PM the previous evening."
+  },
+  {
+    "id": "faq-3",
+    "question": "Can I pause my subscription if I am travelling out of Coimbatore?",
+    "answer": "Yes! You can pause your subscription with one tap in the app under 'Subscription' or via WhatsApp. Any unused days roll forward or are credited back to your account balance."
+  },
+  {
+    "id": "faq-4",
+    "question": "Are the containers microwave-safe and eco-friendly?",
+    "answer": "Yes. Our food trays are 100% food-grade, BPA-free, and microwave safe. We also offer a premium returnable stainless steel insulated tiffin box tier for long-term monthly subscribers who prefer zero plastic."
+  },
+  {
+    "id": "faq-5",
+    "question": "What if I have food allergies or dislikes?",
+    "answer": "When you complete our onboarding quiz or use the Meal Builder, you can select your allergies (e.g., Dairy, Nuts, Gluten, Eggs, Soy). Our smart menu engine automatically excludes any dish containing your allergens and highlights free-from choices."
+  },
+  {
+    "id": "faq-6",
+    "question": "Is this bland boiled diet food?",
+    "answer": "Not at all! We believe diet food fails when it lacks taste. Our kitchen uses traditional Tamil Nadu spices, cold-pressed sesame and groundnut oils in measured grams, fresh curry leaves, and stone-ground masalas. You get deep authentic taste with exact macro control."
+  }
+]

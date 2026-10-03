@@ -1,0 +1,62 @@
+[
+  {
+    "id": "drink-beetroot",
+    "name": "Beetroot Elixir",
+    "volume": "250 ml",
+    "calories": 85,
+    "protein": 2,
+    "carbs": 19,
+    "sugar": "14g naturally occurring sugar",
+    "sugarGrams": 14,
+    "showSugarBadge": false,
+    "price": 59,
+    "tags": ["Cold-Pressed", "Zero Added Sugar", "Veg", "Lab Verification Pending"],
+    "description": "Cold-pressed local beetroot extract with crushed ginger and lemon zest. Rich in dietary nitrates for enhanced athletic oxygen transport.",
+    "image": "https://images.unsplash.com/photo-1546173159-315724a31696?auto=format&fit=crop&w=600&q=80"
+  },
+  {
+    "id": "drink-cucumber-mint",
+    "name": "Cucumber-Mint Cooler",
+    "volume": "250 ml",
+    "calories": 35,
+    "protein": 1,
+    "carbs": 7,
+    "sugar": "4g natural sugar",
+    "sugarGrams": 4,
+    "showSugarBadge": false,
+    "price": 49,
+    "tags": ["Ultra-Light", "Zero Added Sugar", "Hydrating", "Veg", "Lab Verification Pending"],
+    "description": "Crisp Coimbatore polyhouse cucumbers crushed with wild mint and pink Himalayan salt. Pure cooling hydration with minimal calories.",
+    "image": "https://images.unsplash.com/photo-1513558161293-cdaf765ed2fd?auto=format&fit=crop&w=600&q=80"
+  },
+  {
+    "id": "drink-carrot",
+    "name": "Ooty Carrot Vitality",
+    "volume": "250 ml",
+    "calories": 90,
+    "protein": 2,
+    "carbs": 21,
+    "sugar": "16g natural sugar / glass",
+    "sugarGrams": 16,
+    "showSugarBadge": true,
+    "price": 69,
+    "tags": ["Cold-Pressed", "Zero Added Sugar", "Beta-Carotene", "Veg", "Lab Verification Pending"],
+    "description": "Slow-juiced mountain carrots from Nilgiri farms. High beta-carotene and vitamin A. Lab transparency note: 16g naturally occurring carrot fructose per glass (0g added refined sugar).",
+    "image": "https://images.unsplash.com/photo-1551024709-8f23befc6f87?auto=format&fit=crop&w=600&q=80"
+  },
+  {
+    "id": "drink-orange",
+    "name": "Nagpur Orange Fresh-Pressed",
+    "volume": "250 ml",
+    "calories": 110,
+    "protein": 2,
+    "carbs": 26,
+    "sugar": "21g natural fruit sugar / glass",
+    "sugarGrams": 21,
+    "showSugarBadge": true,
+    "price": 79,
+    "tags": ["Cold-Pressed", "Zero Added Sugar", "Vitamin C", "Veg", "Lab Verification Pending"],
+    "description": "Unpasteurized freshly cold-pressed Nagpur oranges delivering 100% RDA of natural Vitamin C. Lab transparency note: 21g natural citrus fruit sugars per glass (0g added refined sugar).",
+    "image": "https://images.unsplash.com/photo-1613478223719-2ab802602423?auto=format&fit=crop&w=600&q=80"
+  }
+]

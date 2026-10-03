@@ -1,0 +1,35 @@
+[
+  {
+    "id": "rev-1",
+    "userName": "[Pilot Cohort Member] Karthik R.",
+    "area": "Race Course, Coimbatore",
+    "avatar": "https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?auto=format&fit=crop&w=200&q=80",
+    "rating": 5,
+    "date": "Early Access Feedback",
+    "comment": "[Beta Tester Feedback Placeholder] Hitting 60g+ protein in a single lunch box without hidden oils or heavy sauces makes sticking to a calorie deficit straightforward. The pepper chicken and kachumber combination is clean.",
+    "goal": "Fat Loss & Muscle Retention",
+    "mealsDeliveredCount": 24
+  },
+  {
+    "id": "rev-2",
+    "userName": "[Pilot Cohort Member] Soundarya V.",
+    "area": "Peelamedu, Coimbatore",
+    "avatar": "https://images.unsplash.com/photo-1580489944761-15a19d654956?auto=format&fit=crop&w=200&q=80",
+    "rating": 5,
+    "date": "Early Access Feedback",
+    "comment": "[Beta Tester Feedback Placeholder] Fixed daily rotation means no daily decision fatigue. The Paneer Balance and Soya Strong boxes keep energy steady through long shifts without food coma.",
+    "goal": "Stay Fit & High Energy",
+    "mealsDeliveredCount": 24
+  },
+  {
+    "id": "rev-3",
+    "userName": "[Pilot Cohort Member] Gokul P.",
+    "area": "Saravanampatti, Coimbatore",
+    "avatar": "https://images.unsplash.com/photo-1570295999919-56ceb5ecca61?auto=format&fit=crop&w=200&q=80",
+    "rating": 5,
+    "date": "Early Access Feedback",
+    "comment": "[Beta Tester Feedback Placeholder] Adding the Grilled Chicken Side whenever I have heavy leg day workouts easily gets me to 95g protein for the day. Delivery to Saravanampatti was prompt.",
+    "goal": "Muscle Gain",
+    "mealsDeliveredCount": 18
+  }
+]

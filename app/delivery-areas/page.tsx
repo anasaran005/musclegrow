@@ -1,144 +1,222 @@
 'use client';
 
 import React, { useState } from 'react';
-import { checkPincode, getDeliveryZones } from '@/lib/api/delivery';
-import zonesData from '@/data/delivery-zones.json';
-import { DeliveryZone } from '@/types';
-import { MapPin, Search, CheckCircle2, Clock, Truck, ShieldCheck, ArrowRight } from 'lucide-react';
-import Link from 'next/link';
+import { MapPin, ArrowRight, ShieldCheck, Navigation, Info, Check } from 'lucide-react';
+import { cn } from '@/lib/utils';
+import { COIMBATORE_ALL_ZONES, CENTRAL_KITCHEN, ZoneLocation } from '@/lib/location';
+import { useAppStore } from '@/store/useAppStore';
 
 export default function DeliveryAreasPage() {
-  const zones = zonesData as DeliveryZone[];
-  const [pincodeInput, setPincodeInput] = useState('');
-  const [searchResult, setSearchResult] = useState<{ deliverable: boolean; message: string; zone?: DeliveryZone } | null>(null);
-  const [loading, setLoading] = useState(false);
+  const { currentLocation, setCurrentLocation } = useAppStore();
+  const [selectedArea, setSelectedArea] = useState<ZoneLocation>(
+    COIMBATORE_ALL_ZONES.find((z) => z.pincode === currentLocation.pincode) || COIMBATORE_ALL_ZONES[0]
+  );
 
-  const handleCheck = async (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!pincodeInput) return;
-    setLoading(true);
-    try {
-      const res = await checkPincode(pincodeInput);
-      setSearchResult(res);
-    } finally {
-      setLoading(false);
-    }
+  const coreZones = COIMBATORE_ALL_ZONES.filter((z) => z.tier === 'core');
+  const phase2Zones = COIMBATORE_ALL_ZONES.filter((z) => z.tier === 'phase2');
+  const outOfRangeZones = COIMBATORE_ALL_ZONES.filter((z) => z.tier === 'out-of-range');
+
+  const mapUrl = `https://maps.google.com/maps?q=${encodeURIComponent(
+    `${selectedArea.area}, Coimbatore, Tamil Nadu`
+  )}&t=m&z=14&ie=UTF8&iwloc=&output=embed`;
+
+  const handleApplyZone = (zone: ZoneLocation) => {
+    setSelectedArea(zone);
+    setCurrentLocation({
+      area: zone.area,
+      pincode: zone.pincode,
+      city: 'Coimbatore',
+      lat: zone.lat,
+      lng: zone.lng,
+      distanceKm: zone.distanceKm,
+      tier: zone.tier,
+      deliveryFee: zone.deliveryFee,
+      isDeliverable: zone.isDeliverable,
+      formattedAddress: `${zone.area}, ${zone.pincode}, Coimbatore`,
+      detectedViaGps: false,
+    });
   };
 
   return (
-    <div className="min-h-screen bg-background pb-24">
-      {/* Header */}
-      <section className="bg-white border-b border-gray-200 py-12 md:py-16 text-center px-4 sm:px-6">
-        <div className="max-w-3xl mx-auto">
-          <span className="text-xs font-bold uppercase tracking-wider text-primary bg-primary-light px-3 py-1 rounded-full">
-            Coimbatore Delivery Network
-          </span>
-          <h1 className="font-heading font-black text-3xl sm:text-5xl text-gray-900 mt-3">
-            Fresh Meals at Your Doorstep
+    <div className="min-h-screen bg-background pb-20 pt-8 sm:pt-12 px-4 sm:px-6 lg:px-8">
+      <div className="max-w-5xl mx-auto">
+        {/* Simple Heading */}
+        <div className="text-center">
+          <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-100 text-emerald-800 text-xs font-bold mb-3">
+            <ShieldCheck className="w-3.5 h-3.5" />
+            <span>Coimbatore 10km Kitchen Delivery Network</span>
+          </div>
+          <h1 className="font-heading font-black text-2xl sm:text-4xl text-gray-900 tracking-tight">
+            Delivery Coverage &amp; Pincodes
           </h1>
-          <p className="text-gray-600 text-sm sm:text-base mt-2 max-w-xl mx-auto">
-            Dispatched hot from our RS Puram central kitchen twice daily. Free delivery across all active Coimbatore pincodes.
+          <p className="text-gray-500 text-xs sm:text-sm mt-2 max-w-2xl mx-auto">
+            Dispatched hot twice daily from our central kitchen in Semmozhi Nagar, Kuniyamuthur.
+            Core hub routes enjoy <strong>Free Delivery</strong>, while Phase 2 routes within our 10km radius have a nominal <strong>₹35 delivery charge</strong>.
           </p>
-
-          {/* Interactive Pincode Checker */}
-          <form onSubmit={handleCheck} className="mt-8 max-w-md mx-auto flex gap-2">
-            <div className="relative flex-1">
-              <MapPin className="w-5 h-5 text-primary absolute left-3.5 top-1/2 -translate-y-1/2" />
-              <input
-                type="text"
-                maxLength={6}
-                value={pincodeInput}
-                onChange={(e) => setPincodeInput(e.target.value.replace(/[^0-9]/g, ''))}
-                placeholder="Enter 6-digit Pincode (e.g. 641002)"
-                className="w-full pl-10 pr-4 py-3 rounded-2xl border border-gray-200 text-sm font-bold text-gray-900 bg-gray-50 focus:bg-white focus:border-primary focus:outline-none shadow-xs"
-              />
-            </div>
-            <button
-              type="submit"
-              disabled={loading || pincodeInput.length < 6}
-              className="bg-primary hover:bg-primary-hover disabled:opacity-50 text-white font-bold text-xs px-5 py-3 rounded-2xl shadow-sm tap-active"
-            >
-              {loading ? 'Checking...' : 'Check Area'}
-            </button>
-          </form>
-
-          {searchResult && (
-            <div
-              className={`mt-4 max-w-md mx-auto p-4 rounded-2xl text-xs font-semibold text-left flex items-start gap-3 ${
-                searchResult.deliverable
-                  ? 'bg-emerald-50 text-emerald-900 border border-emerald-200'
-                  : 'bg-amber-50 text-amber-900 border border-amber-200'
-              }`}
-            >
-              <CheckCircle2 className="w-5 h-5 text-emerald-600 shrink-0 mt-0.5" />
-              <div>
-                <p className="font-bold text-sm">{searchResult.message}</p>
-                {searchResult.zone && (
-                  <p className="text-[11px] text-emerald-700 mt-1 font-normal">
-                    Typical transit time: {searchResult.zone.avgDeliveryMinutes} mins • Slots: {searchResult.zone.slots.join(', ')}
-                  </p>
-                )}
-              </div>
-            </div>
-          )}
         </div>
-      </section>
 
-      {/* Grid of Zones */}
-      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-12">
-        <h2 className="font-heading font-black text-2xl text-gray-900 mb-6">
-          Active Delivery Zones in Coimbatore
-        </h2>
-
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-          {zones.map((zone) => (
-            <div
-              key={zone.pincode}
-              className="bg-white rounded-2xl p-5 border border-gray-200 shadow-xs hover:shadow-md transition-all flex flex-col justify-between"
-            >
-              <div>
-                <div className="flex items-center justify-between">
-                  <h3 className="font-heading font-bold text-base text-gray-900">
-                    {zone.area}
-                  </h3>
-                  <span className="font-mono text-xs font-bold bg-primary-light text-primary px-2 py-0.5 rounded">
-                    {zone.pincode}
+        {/* Section 1: Core Kitchen Hubs */}
+        <div className="mt-8">
+          <div className="flex items-center justify-between pb-2 border-b border-gray-200">
+            <h2 className="text-xs font-bold uppercase tracking-wider text-emerald-800 flex items-center gap-1.5">
+              <ShieldCheck className="w-4 h-4 text-emerald-600" />
+              Core Kitchen Hub (0 - 4 km) • Free Delivery
+            </h2>
+            <span className="text-xs font-bold text-emerald-700 bg-emerald-50 px-2.5 py-0.5 rounded-full border border-emerald-200">
+              ₹0 Delivery Fee
+            </span>
+          </div>
+          <div className="flex flex-wrap items-center gap-2 mt-3">
+            {coreZones.map((area) => {
+              const isSelected = selectedArea.pincode === area.pincode;
+              return (
+                <button
+                  key={area.pincode}
+                  type="button"
+                  onClick={() => handleApplyZone(area)}
+                  className={cn(
+                    "px-3.5 py-2 rounded-2xl text-xs sm:text-sm font-bold transition-all tap-active flex items-center gap-2 cursor-pointer border shadow-xs",
+                    isSelected
+                      ? "bg-[#124233] text-white border-[#124233] shadow-md scale-105"
+                      : "bg-white text-gray-700 border-gray-200 hover:border-gray-300 hover:bg-gray-50"
+                  )}
+                >
+                  <MapPin className={cn("w-3.5 h-3.5", isSelected ? "text-[#899545]" : "text-emerald-600")} />
+                  <span>{area.area}</span>
+                  <span className={cn("text-[11px] font-mono", isSelected ? "text-white/80" : "text-gray-400")}>
+                    ({area.pincode})
                   </span>
-                </div>
-                <div className="flex items-center gap-1.5 text-xs text-gray-500 mt-2">
-                  <Clock className="w-3.5 h-3.5 text-primary" />
-                  <span>Avg arrival: {zone.avgDeliveryMinutes} mins</span>
-                </div>
-              </div>
-
-              <div className="mt-4 pt-3 border-t border-gray-100 flex items-center justify-between text-[11px]">
-                <span className="font-bold text-emerald-700">✓ 2 Slots Daily</span>
-                <span className="text-gray-400">Free Delivery</span>
-              </div>
-            </div>
-          ))}
+                  {area.distanceKm === 0 ? (
+                    <span className="text-[9px] uppercase px-1.5 py-0.5 rounded-full font-black tracking-wider bg-emerald-500 text-white">
+                      Hub
+                    </span>
+                  ) : (
+                    <span className={cn("text-[10px]", isSelected ? "text-white/80" : "text-gray-400")}>
+                      {area.distanceKm} km
+                    </span>
+                  )}
+                </button>
+              );
+            })}
+          </div>
         </div>
 
-        {/* Not in list banner */}
-        <div className="mt-12 bg-white rounded-3xl p-8 border border-gray-200 text-center max-w-xl mx-auto shadow-sm">
-          <Truck className="w-10 h-10 text-primary mx-auto mb-3" />
-          <h3 className="font-heading font-black text-xl text-gray-900">
-            Don't see your Coimbatore area listed?
-          </h3>
-          <p className="text-xs text-gray-500 mt-1 max-w-sm mx-auto">
-            We are rapidly onboarding new delivery routes in Coimbatore. Drop your address on WhatsApp and we will prioritize your neighborhood.
-          </p>
+        {/* Section 2: Phase 2 Extended Delivery Routes (<= 10km) */}
+        <div className="mt-8">
+          <div className="flex items-center justify-between pb-2 border-b border-gray-200">
+            <h2 className="text-xs font-bold uppercase tracking-wider text-amber-800 flex items-center gap-1.5">
+              <Navigation className="w-4 h-4 text-amber-600" />
+              Phase 2 Routes (4 - 10 km) • Deliverable
+            </h2>
+            <span className="text-xs font-bold text-amber-800 bg-amber-50 px-2.5 py-0.5 rounded-full border border-amber-200">
+              +₹35 Delivery Fee Applicable
+            </span>
+          </div>
+          <div className="flex flex-wrap items-center gap-2 mt-3">
+            {phase2Zones.map((area) => {
+              const isSelected = selectedArea.pincode === area.pincode;
+              return (
+                <button
+                  key={area.pincode}
+                  type="button"
+                  onClick={() => handleApplyZone(area)}
+                  className={cn(
+                    "px-3.5 py-2 rounded-2xl text-xs sm:text-sm font-bold transition-all tap-active flex items-center gap-2 cursor-pointer border shadow-xs",
+                    isSelected
+                      ? "bg-[#124233] text-white border-[#124233] shadow-md scale-105"
+                      : "bg-white text-gray-700 border-gray-200 hover:border-gray-300 hover:bg-gray-50"
+                  )}
+                >
+                  <MapPin className={cn("w-3.5 h-3.5", isSelected ? "text-[#899545]" : "text-amber-600")} />
+                  <span>{area.area}</span>
+                  <span className={cn("text-[11px] font-mono", isSelected ? "text-white/80" : "text-gray-400")}>
+                    ({area.pincode})
+                  </span>
+                  <span className={cn("text-[10px]", isSelected ? "text-white/80" : "text-gray-400")}>
+                    {area.distanceKm} km
+                  </span>
+                </button>
+              );
+            })}
+          </div>
+        </div>
+
+        {/* Section 3: Beyond 10km Radius */}
+        <div className="mt-8">
+          <div className="flex items-center justify-between pb-2 border-b border-gray-200">
+            <h2 className="text-xs font-bold uppercase tracking-wider text-gray-400 flex items-center gap-1.5">
+              <Info className="w-4 h-4 text-gray-400" />
+              Beyond 10 km Radius (&gt;10 km) • Coming Soon
+            </h2>
+            <span className="text-xs font-bold text-gray-400 bg-gray-50 px-2.5 py-0.5 rounded-full border border-gray-200">
+              Phase 3 Waitlist
+            </span>
+          </div>
+          <div className="flex flex-wrap items-center gap-2 mt-3">
+            {outOfRangeZones.map((area) => (
+              <div
+                key={area.pincode}
+                className="px-3 py-1.5 rounded-2xl text-xs font-semibold bg-gray-50 text-gray-400 border border-gray-200 flex items-center gap-1.5"
+              >
+                <span>{area.area}</span>
+                <span className="font-mono text-[10px]">({area.pincode})</span>
+                <span className="text-[10px] italic">• {area.distanceKm} km (Waitlist)</span>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {/* The Clean Google Map Preview */}
+        <div className="mt-8 rounded-3xl overflow-hidden border border-gray-200 shadow-xl bg-white relative">
+          <div className="p-3.5 bg-gray-50 border-b border-gray-200 flex flex-wrap items-center justify-between gap-2 text-xs">
+            <div className="flex items-center gap-2">
+              <MapPin className="w-4 h-4 text-[#124233]" />
+              <span className="font-bold text-gray-900">
+                Viewing: {selectedArea.area} ({selectedArea.pincode})
+              </span>
+              <span className="text-gray-500">• {selectedArea.distanceKm} km from Kuniyamuthur Kitchen Hub</span>
+            </div>
+            <div className="flex items-center gap-2 font-bold">
+              {selectedArea.tier === 'core' && (
+                <span className="text-emerald-700 bg-emerald-100 px-2 py-0.5 rounded-md">
+                  Core Zone • Free Delivery
+                </span>
+              )}
+              {selectedArea.tier === 'phase2' && (
+                <span className="text-amber-800 bg-amber-100 px-2 py-0.5 rounded-md">
+                  Phase 2 • ₹35 Delivery Fee
+                </span>
+              )}
+              {selectedArea.tier === 'out-of-range' && (
+                <span className="text-rose-800 bg-rose-100 px-2 py-0.5 rounded-md">
+                  Outside 10km • Waitlist
+                </span>
+              )}
+            </div>
+          </div>
+          <iframe
+            title={`Delivery Map - ${selectedArea.area}`}
+            src={mapUrl}
+            className="w-full h-[400px] sm:h-[480px] border-0"
+            loading="lazy"
+            allowFullScreen
+          />
+        </div>
+
+        {/* Minimal Footer Notice */}
+        <div className="mt-6 flex flex-col sm:flex-row items-center justify-center gap-2 text-xs text-gray-500">
+          <span>Need delivery in another area of Coimbatore?</span>
           <a
-            href="https://wa.me/919876543210"
+            href="https://wa.me/919876543210?text=Hi%20MuscleGrow%2C%20please%20launch%20delivery%20in%20my%20area!"
             target="_blank"
             rel="noopener noreferrer"
-            className="mt-4 inline-flex items-center gap-1.5 bg-[#25D366] text-white text-xs font-bold px-5 py-2.5 rounded-xl shadow-sm"
+            className="font-bold text-[#124233] hover:underline inline-flex items-center gap-1"
           >
-            <span>Request Area on WhatsApp</span>
-            <ArrowRight className="w-3.5 h-3.5" />
+            <span>Request your area on WhatsApp</span>
+            <ArrowRight className="w-3 h-3" />
           </a>
         </div>
-      </section>
+      </div>
     </div>
   );
 }

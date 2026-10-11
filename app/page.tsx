@@ -1,8 +1,7 @@
 import React from 'react';
-import { getBoxes, getSchedule, getSides, getAddons } from '@/lib/api/boxes';
+import { getSides, getAddons } from '@/lib/api/boxes';
 import { getPlans } from '@/lib/api/plans';
 import { SwiggyHero } from '@/components/home/SwiggyHero';
-import { WeeklyCalendarStrip } from '@/components/home/WeeklyCalendarStrip';
 import { AddASideSection } from '@/components/home/AddASideSection';
 import { DrinksStrip } from '@/components/home/DrinksStrip';
 import { HowItWorksSteps } from '@/components/home/HowItWorksSteps';
@@ -12,9 +11,7 @@ import { FaqAccordion } from '@/components/home/FaqAccordion';
 import { FinalCtaBand } from '@/components/home/FinalCtaBand';
 
 export default async function HomePage() {
-  const [boxes, schedule, sides, addons, plans] = await Promise.all([
-    getBoxes(),
-    getSchedule(),
+  const [sides, addons, plans] = await Promise.all([
     getSides(),
     getAddons(),
     getPlans(),
@@ -25,10 +22,7 @@ export default async function HomePage() {
       {/* 1. Simplified Swiggy-Style Hero Section */}
       <SwiggyHero />
 
-      {/* 3. Weekly calendar strip (Mon-Sat 6 boxes) */}
-      <WeeklyCalendarStrip boxes={boxes} schedule={schedule} />
-
-      {/* 4. "Add a side" section (6 high-protein sides) */}
+      {/* 2. "Add a side" section (6 high-protein sides) */}
       <AddASideSection sides={sides} />
 
       {/* 5. Drinks strip (4 cold-pressed juices with natural sugar disclosures) */}

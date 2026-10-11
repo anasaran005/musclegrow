@@ -1,0 +1,41 @@
+Monthly scenarios: boxes only (sides and juices not included),,,,,
+"Blue cells are inputs. Cost per box comes from the Owner PnL averages. Delivery cost of ₹4 per box assumes you deliver yourself; riders are added as a monthly cost, which slightly double-counts, so results are conservative.",,,,,
+,,,,,
+Operating days per month,26,Mon to Sat,,,
+Veg share of boxes,30.0%,My assumption; adjust after first month,,,
+Plan mix: Daily trial,30.0%,Share of boxes sold at trial price,,,
+Plan mix: Weekly,40.0%,,,,
+Plan mix: Monthly,30.0%,Mix must add to 100%,,,
+"Fixed: software, domain, hosting (₹/month)","₹2,000","Vercel, Supabase, domain, WhatsApp API",,,
+Fixed: marketing and gym samples (₹/month),"₹8,000","Flyers, sample boxes, Instagram",,,
+"Fixed: licence, repairs, miscellaneous (₹/month)","₹2,000","FSSAI renewal, equipment upkeep",,,
+Helper wage (₹/month each),"₹14,000",Kitchen helper,,,
+Rider wage (₹/month each),"₹16,000",Delivery rider,,,
+Average cost per Non-Veg box before gateway,₹156.92,,,,
+Average cost per Veg box before gateway,₹113.97,,,,
+Weighted Non-Veg selling price,₹292.00,,,,
+Weighted Veg selling price,₹262.00,,,,
+,,,,,
+Scenario,A,B,C,D,E
+Boxes per day,5,10,20,30,50
+Helpers hired,0,0,1,2,3
+Riders hired,0,0,0,1,2
+Boxes per month,130,260,520,780,"1,300"
+Non-Veg boxes per month,91,182,364,546,910
+Veg boxes per month,39,78,156,234,390
+Revenue (₹/month),"₹36,790","₹73,580","₹147,160","₹220,740","₹367,900"
+"Procurement, gas, packaging, electricity, wastage, delivery","₹18,725","₹37,450","₹74,899","₹112,349","₹187,248"
+Payment gateway fees,₹883,"₹1,766","₹3,532","₹5,298","₹8,830"
+Contribution after variable costs,"₹17,182","₹34,365","₹68,729","₹103,094","₹171,823"
+Contribution per box,₹132.17,₹132.17,₹132.17,₹132.17,₹132.17
+"Fixed: software, marketing, miscellaneous","₹12,000","₹12,000","₹12,000","₹12,000","₹12,000"
+Fixed: helpers,₹0,₹0,"₹14,000","₹28,000","₹42,000"
+Fixed: riders,₹0,₹0,₹0,"₹16,000","₹32,000"
+Total fixed costs,"₹12,000","₹12,000","₹26,000","₹56,000","₹86,000"
+Net profit before paying family,"₹5,182","₹22,365","₹42,729","₹47,094","₹85,823"
+Net margin on revenue,14.1%,30.4%,29.0%,21.3%,23.3%
+Notional value of family labour,"₹3,250","₹6,500","₹13,000","₹19,500","₹32,500"
+Net profit after notional labour,"₹1,932","₹15,865","₹29,729","₹27,594","₹53,323"
+,,,,,
+"Break-even boxes per day (software, marketing, misc only, no helpers)",3.5,Uses contribution per box from the 10-boxes/day column,,,
+Break-even boxes per day including notional labour,4.3,,,,

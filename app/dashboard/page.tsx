@@ -19,7 +19,8 @@ import {
 import { formatCurrency } from '@/lib/utils';
 
 export default function DashboardPage() {
-  const { user, getDailyTotals, getPlanMealCount, getDailyBox, dayConfigs } = useAppStore();
+  const { user, getDailyTotals, getPlanMealCount, getDailyBox, dayConfigs, placedOrders } = useAppStore();
+  const latestOrder = placedOrders && placedOrders.length > 0 ? placedOrders[0] : null;
 
   const todayTotals = getDailyTotals('Mon');
   const targetCalories = user.calculatedTargets?.calories || 2200;
@@ -82,14 +83,14 @@ export default function DashboardPage() {
                 <div className="flex items-center gap-2">
                   <span className="w-2.5 h-2.5 rounded-full bg-lime-brand animate-ping" />
                   <span className="text-xs font-extrabold uppercase tracking-wider text-lime-brand">
-                    Next Delivery Today
+                    {latestOrder ? `Active Delivery: ${latestOrder.date}` : 'Next Delivery Today'}
                   </span>
                 </div>
                 <Link
-                  href="/orders/ord-101"
+                  href={latestOrder ? `/orders/${latestOrder.id}` : "/orders/ord-101"}
                   className="text-xs font-bold text-lime-brand hover:underline flex items-center gap-1"
                 >
-                  <span>Track live</span>
+                  <span>{latestOrder ? `Order ${latestOrder.displayId}` : 'Track live'}</span>
                   <ArrowUpRight className="w-3.5 h-3.5" />
                 </Link>
               </div>
@@ -98,11 +99,18 @@ export default function DashboardPage() {
                 <div>
                   <p className="text-xs text-gray-300">Estimated Arrival:</p>
                   <p className="font-heading font-black text-2xl sm:text-3xl text-white">
-                    12:45 PM <span className="text-xs font-normal text-lime-brand">(Lunch Window)</span>
+                    {latestOrder?.estimatedDeliveryTime || '12:45 PM'}{' '}
+                    <span className="text-xs font-normal text-lime-brand">
+                      ({latestOrder ? (latestOrder.slot === 'dinner' ? 'Dinner Window' : 'Lunch Window') : 'Lunch Window'})
+                    </span>
                   </p>
                   <div className="flex items-center gap-2 text-xs text-gray-300 mt-2">
-                    <MapPin className="w-3.5 h-3.5 text-lime-brand" />
-                    <span>Flat 4B, East Sambandam Road, RS Puram</span>
+                    <MapPin className="w-3.5 h-3.5 text-lime-brand shrink-0" />
+                    <span>
+                      {latestOrder?.deliveryAddress
+                        ? `${latestOrder.deliveryAddress.flatNumber}, ${latestOrder.deliveryAddress.street}, ${latestOrder.deliveryAddress.area}`
+                        : 'Flat 4B, East Sambandam Road, RS Puram'}
+                    </span>
                   </div>
                 </div>
 
@@ -112,8 +120,12 @@ export default function DashboardPage() {
                   </div>
                   <div>
                     <p className="text-[11px] text-gray-300">Rider Partner:</p>
-                    <p className="text-xs font-bold text-white">Murugan S. (+91 94432...)</p>
-                    <p className="text-[10px] text-lime-brand font-medium">Out for delivery</p>
+                    <p className="text-xs font-bold text-white">
+                      {latestOrder?.deliveryAgent?.name || 'Murugan S.'} ({latestOrder?.deliveryAgent?.phone || '+91 94432...'})
+                    </p>
+                    <p className="text-[10px] text-lime-brand font-medium">
+                      {latestOrder?.status || 'Out for delivery'}
+                    </p>
                   </div>
                 </div>
               </div>

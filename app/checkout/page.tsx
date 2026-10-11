@@ -26,6 +26,7 @@ import {
   Plus,
 } from 'lucide-react';
 import { cn, formatCurrency } from '@/lib/utils';
+import { getZoneByPincode } from '@/lib/location';
 
 export default function CheckoutPage() {
   const router = useRouter();
@@ -40,6 +41,7 @@ export default function CheckoutPage() {
     appliedCoupon,
     applyCoupon,
     addAddress,
+    currentLocation,
   } = useAppStore();
 
   const [checkoutStep, setCheckoutStep] = useState<1 | 2 | 3 | 4>(1);
@@ -57,6 +59,15 @@ export default function CheckoutPage() {
 
   const sides = sidesData as SideBox[];
   const addons = addonsData as AddonDrink[];
+
+  // Delivery fee calculation based on selected address / zone
+  const selectedAddr = addresses.find((a) => a.id === selectedAddressId) || addresses[0];
+  const pinToCheck = selectedAddr?.pincode || currentLocation?.pincode;
+  const zoneInfo = pinToCheck ? getZoneByPincode(pinToCheck) : undefined;
+  
+  const isPhase2 = zoneInfo?.tier === 'phase2' || (!zoneInfo && currentLocation?.tier === 'phase2');
+  const isOutOfRange = zoneInfo?.tier === 'out-of-range' || (!zoneInfo && currentLocation?.tier === 'out-of-range');
+  const deliveryFee = isPhase2 ? (zoneInfo?.deliveryFee ?? 35) : 0;
 
   // Determine subtotal based on active order
   let subtotal = 299;
@@ -102,7 +113,7 @@ export default function CheckoutPage() {
     }
   }
 
-  const finalTotal = Math.max(0, subtotal - discount);
+  const finalTotal = Math.max(0, subtotal - discount + deliveryFee);
 
   const handleApplyCoupon = (e: React.FormEvent) => {
     e.preventDefault();
@@ -149,8 +160,6 @@ export default function CheckoutPage() {
       router.push('/checkout/success');
     }, 1200);
   };
-
-  const selectedAddr = addresses.find((a) => a.id === selectedAddressId) || addresses[0];
 
   return (
     <div className="min-h-screen bg-[#FBFDF8] text-[#124233] pb-32">
@@ -229,6 +238,9 @@ export default function CheckoutPage() {
                 <div className="space-y-3">
                   {addresses.map((addr) => {
                     const isSelected = selectedAddressId === addr.id;
+                    const addrZone = getZoneByPincode(addr.pincode);
+                    const addrTier = addrZone?.tier || 'core';
+                    const addrFee = addrTier === 'phase2' ? (addrZone?.deliveryFee ?? 35) : 0;
                     return (
                       <div
                         key={addr.id}
@@ -241,13 +253,28 @@ export default function CheckoutPage() {
                         )}
                       >
                         <div>
-                          <div className="flex items-center gap-2">
+                          <div className="flex items-center gap-2 flex-wrap">
                             <span className="font-heading font-black text-sm text-[#124233]">
                               {addr.tag} ({addr.area})
                             </span>
                             {addr.isDefault && (
                               <span className="text-[10px] bg-gray-100 text-gray-600 px-2 py-0.5 rounded font-bold">
                                 Default
+                              </span>
+                            )}
+                            {addrTier === 'core' && (
+                              <span className="text-[10px] bg-emerald-100 text-emerald-800 px-2 py-0.5 rounded font-bold">
+                                Core Hub • Free Delivery
+                              </span>
+                            )}
+                            {addrTier === 'phase2' && (
+                              <span className="text-[10px] bg-amber-100 text-amber-800 px-2 py-0.5 rounded font-bold">
+                                Phase 2 • +₹{addrFee} Delivery Fee
+                              </span>
+                            )}
+                            {addrTier === 'out-of-range' && (
+                              <span className="text-[10px] bg-rose-100 text-rose-800 px-2 py-0.5 rounded font-bold">
+                                Beyond 10km Limit
                               </span>
                             )}
                           </div>
@@ -265,6 +292,16 @@ export default function CheckoutPage() {
                       </div>
                     );
                   })}
+
+                  {isOutOfRange && (
+                    <div className="p-3 bg-rose-50 border border-rose-200 rounded-2xl text-xs text-rose-800 flex items-start gap-2">
+                      <AlertCircle className="w-4 h-4 text-rose-600 shrink-0 mt-0.5" />
+                      <div>
+                        <span className="font-bold block">Delivery Notice: Address Beyond 10km</span>
+                        <span>This selected address ({selectedAddr?.area}, {selectedAddr?.pincode}) is beyond our current 10km delivery radius from our Kuniyamuthur central kitchen. We are expanding to Phase 3 soon.</span>
+                      </div>
+                    </div>
+                  )}
 
                   {!showNewAddress ? (
                     <button
@@ -654,7 +691,11 @@ export default function CheckoutPage() {
 
                 <div className="flex justify-between text-gray-600">
                   <span>Coimbatore Doorstep Delivery:</span>
-                  <span className="font-bold text-emerald-800 uppercase">FREE</span>
+                  {deliveryFee > 0 ? (
+                    <span className="font-bold text-amber-800 font-mono">+₹{deliveryFee} (Phase 2 Route)</span>
+                  ) : (
+                    <span className="font-bold text-emerald-800 uppercase font-mono">FREE (Core Hub)</span>
+                  )}
                 </div>
 
                 <div className="flex justify-between text-gray-600">

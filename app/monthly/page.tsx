@@ -21,6 +21,7 @@ import {
   QrCode,
   Flame,
   Info,
+  Check,
 } from 'lucide-react';
 import {
   getMonthlyOperatingDays,
@@ -43,6 +44,7 @@ export default function MonthlyPlanPage() {
   const [dietVariation, setDietVariation] = useState<'non-veg' | 'veg' | 'mixed'>('non-veg');
   const [paymentMode, setPaymentMode] = useState<'prepaid' | 'autopay'>('autopay');
   const [skippedDays, setSkippedDays] = useState<string[]>([]);
+  const [mobileWeekTab, setMobileWeekTab] = useState<0 | 1 | 2 | 3 | 'all'>(0);
 
   // Delivery slots
   const [lunchSlot, setLunchSlot] = useState('12:00 PM - 1:30 PM');
@@ -82,6 +84,12 @@ export default function MonthlyPlanPage() {
       };
     });
   }, [monthlyDays, dietVariation, skippedDays]);
+
+  // Mobile filtered calendar days
+  const displayedMobileDays = useMemo(() => {
+    if (mobileWeekTab === 'all') return calendarDays;
+    return calendarDays.filter((d) => d.weekIndex === mobileWeekTab);
+  }, [calendarDays, mobileWeekTab]);
 
   // Color coding helper based on main dish name
   const getMainColorTheme = (mainName: string, isVeg: boolean) => {
@@ -143,7 +151,7 @@ export default function MonthlyPlanPage() {
   };
 
   // Price calculations
-  // Monthly pricing: ₹269 NV / ₹249 V. Second meal -₹10.
+  // Monthly pricing: ₹269 NV / ₹239 V. Second meal -₹10.
   const activeDays = calendarDays.filter((d) => !d.isSkipped);
 
   const totalPrice = useMemo(() => {
@@ -180,35 +188,35 @@ export default function MonthlyPlanPage() {
   };
 
   return (
-    <div className="min-h-screen bg-[#FBFDF8] text-[#124233] pb-32">
+    <div className="min-h-screen bg-[#FBFDF8] text-[#124233] pb-28 lg:pb-32">
       {/* 1. Header */}
-      <section className="bg-gradient-to-b from-[#E8F1D4] via-[#F2F7E4] to-[#FBFDF8] pt-8 pb-10 border-b border-[#124233]/10">
+      <section className="bg-gradient-to-b from-[#E8F1D4] via-[#F2F7E4] to-[#FBFDF8] pt-6 sm:pt-8 pb-6 sm:pb-10 border-b border-[#124233]/10">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex flex-col md:flex-row md:items-end justify-between gap-6">
+          <div className="flex flex-col md:flex-row md:items-end justify-between gap-5 sm:gap-6">
             <div>
-              <h1 className="font-heading font-black text-3xl sm:text-4xl lg:text-5xl text-[#124233] tracking-tight">
+              <h1 className="font-heading font-black text-2xl sm:text-4xl lg:text-5xl text-[#124233] tracking-tight">
                 Monthly Lifestyle Plan
               </h1>
-              <p className="text-sm sm:text-base text-[#124233]/80 font-medium max-w-2xl mt-2 leading-relaxed">
-                Color-coded calendar of rotating chicken styles, coastal fish, and rich vegetarian mains. Tap any day to view its 5-item box. Peanut days include free 1-click skips.
+              <p className="text-xs sm:text-base text-[#124233]/80 font-medium max-w-2xl mt-1.5 sm:mt-2 leading-relaxed">
+                Color-coded calendar of rotating chicken styles, coastal fish, and rich vegetarian mains. Mon–Sat calibrated protein boxes with free 1-click skips.
               </p>
             </div>
 
             {/* Quick Action: Skip Peanut Days */}
-            <div className="bg-white/95 backdrop-blur-md rounded-2xl p-4 border border-[#124233]/15 shadow-md flex items-center justify-between gap-4 shrink-0">
-              <div className="flex items-center gap-3">
-                <span className="text-2xl">🥜</span>
+            <div className="bg-white/95 backdrop-blur-md rounded-2xl p-3 sm:p-4 border border-[#124233]/15 shadow-sm flex items-center justify-between gap-3 shrink-0">
+              <div className="flex items-center gap-2.5">
+                <span className="text-xl sm:text-2xl shrink-0">🥜</span>
                 <div>
-                  <span className="text-xs font-bold text-gray-900 block">Peanut Allergy?</span>
-                  <span className="text-[11px] text-gray-500">Free skip available on all peanut sundal days</span>
+                  <span className="text-xs font-bold text-gray-900 block leading-tight">Peanut Allergy?</span>
+                  <span className="text-[10px] sm:text-[11px] text-gray-500 block leading-tight mt-0.5">Free 1-click skip on peanut sundal days</span>
                 </div>
               </div>
               <button
                 type="button"
                 onClick={handleSkipAllPeanutDays}
-                className="px-3.5 py-2 rounded-xl bg-amber-100 hover:bg-amber-200 text-amber-900 font-bold text-xs transition-colors shrink-0"
+                className="px-3 py-1.5 sm:px-3.5 sm:py-2 rounded-xl bg-amber-100 hover:bg-amber-200 text-amber-900 font-bold text-xs transition-colors shrink-0 tap-active"
               >
-                Skip Peanut Days
+                Skip Peanuts
               </button>
             </div>
           </div>
@@ -216,66 +224,69 @@ export default function MonthlyPlanPage() {
       </section>
 
       {/* 2. Controls & Color Legend */}
-      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-8">
-        <div className="bg-white rounded-3xl p-4 sm:p-6 border border-black/5 shadow-sm space-y-5">
-          <div className="flex flex-col lg:flex-row items-stretch lg:items-center justify-between gap-6">
+      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-5 sm:pt-8">
+        <div className="bg-white rounded-3xl p-4 sm:p-6 border border-black/5 shadow-sm space-y-4 sm:space-y-5">
+          <div className="flex flex-col lg:flex-row items-stretch lg:items-center justify-between gap-4 sm:gap-6">
             {/* Diet Plan Toggle */}
-            <div className="flex flex-col sm:flex-row sm:items-center gap-3">
-              <span className="text-xs font-bold uppercase tracking-wider text-gray-400">Diet Plan:</span>
-              <div className="inline-flex flex-wrap p-1 bg-[#F5F8EC] rounded-2xl border border-[#124233]/10">
+            <div className="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-3">
+              <span className="text-xs font-bold uppercase tracking-wider text-gray-400 shrink-0">Diet Plan:</span>
+              <div className="grid grid-cols-3 gap-1 sm:gap-1.5 p-1 bg-[#F5F8EC] rounded-2xl border border-[#124233]/10 w-full sm:w-auto">
                 <button
                   type="button"
                   onClick={() => setDietVariation('non-veg')}
                   className={cn(
-                    "flex items-center gap-1.5 px-4 py-2 rounded-xl text-xs sm:text-sm font-bold transition-all tap-active",
+                    "flex items-center justify-center gap-1.5 px-2.5 sm:px-4 py-2 rounded-xl text-xs sm:text-sm font-bold transition-all tap-active text-center",
                     dietVariation === 'non-veg'
                       ? "bg-[#124233] text-white shadow-xs"
                       : "text-[#124233]/70 hover:text-[#124233]"
                   )}
                 >
-                  <Drumstick className="w-3.5 h-3.5 text-[#E2ECBA]" />
-                  <span>Non-Veg (24 NV)</span>
+                  <Drumstick className="w-3.5 h-3.5 text-[#E2ECBA] shrink-0" />
+                  <span className="sm:hidden">Non-Veg</span>
+                  <span className="hidden sm:inline">Non-Veg (24 NV)</span>
                 </button>
 
                 <button
                   type="button"
                   onClick={() => setDietVariation('veg')}
                   className={cn(
-                    "flex items-center gap-1.5 px-4 py-2 rounded-xl text-xs sm:text-sm font-bold transition-all tap-active",
+                    "flex items-center justify-center gap-1.5 px-2.5 sm:px-4 py-2 rounded-xl text-xs sm:text-sm font-bold transition-all tap-active text-center",
                     dietVariation === 'veg'
                       ? "bg-emerald-700 text-white shadow-xs"
                       : "text-[#124233]/70 hover:text-[#124233]"
                   )}
                 >
-                  <Leaf className="w-3.5 h-3.5 text-emerald-200" />
-                  <span>Vegetarian (24 V)</span>
+                  <Leaf className="w-3.5 h-3.5 text-emerald-200 shrink-0" />
+                  <span className="sm:hidden">Veg</span>
+                  <span className="hidden sm:inline">Vegetarian (24 V)</span>
                 </button>
 
                 <button
                   type="button"
                   onClick={() => setDietVariation('mixed')}
                   className={cn(
-                    "flex items-center gap-1.5 px-4 py-2 rounded-xl text-xs sm:text-sm font-bold transition-all tap-active",
+                    "flex items-center justify-center gap-1.5 px-2.5 sm:px-4 py-2 rounded-xl text-xs sm:text-sm font-bold transition-all tap-active text-center",
                     dietVariation === 'mixed'
                       ? "bg-[#899545] text-white shadow-xs"
                       : "text-[#124233]/70 hover:text-[#124233]"
                   )}
                 >
-                  <Layers className="w-3.5 h-3.5 text-white" />
-                  <span>Mixed (16 NV + 8 V)</span>
+                  <Layers className="w-3.5 h-3.5 text-white shrink-0" />
+                  <span className="sm:hidden">Mixed</span>
+                  <span className="hidden sm:inline">Mixed (16+8)</span>
                 </button>
               </div>
             </div>
 
             {/* Meals Per Day Toggle */}
-            <div className="flex items-center gap-3">
-              <span className="text-xs font-bold uppercase tracking-wider text-gray-400">Meals:</span>
-              <div className="inline-flex p-1 bg-[#F5F8EC] rounded-2xl border border-[#124233]/10">
+            <div className="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-3">
+              <span className="text-xs font-bold uppercase tracking-wider text-gray-400 shrink-0">Daily Meals:</span>
+              <div className="grid grid-cols-2 gap-1 sm:gap-1.5 p-1 bg-[#F5F8EC] rounded-2xl border border-[#124233]/10 w-full sm:w-auto">
                 <button
                   type="button"
                   onClick={() => setMealsPerDay(1)}
                   className={cn(
-                    "px-4 py-2 rounded-xl text-xs sm:text-sm font-bold transition-all tap-active",
+                    "px-3 sm:px-4 py-2 rounded-xl text-xs sm:text-sm font-bold transition-all tap-active text-center",
                     mealsPerDay === 1
                       ? "bg-[#124233] text-white shadow-xs"
                       : "text-[#124233]/70 hover:text-[#124233]"
@@ -288,52 +299,199 @@ export default function MonthlyPlanPage() {
                   type="button"
                   onClick={() => setMealsPerDay(2)}
                   className={cn(
-                    "px-4 py-2 rounded-xl text-xs sm:text-sm font-bold transition-all tap-active flex items-center gap-1.5",
+                    "px-3 sm:px-4 py-2 rounded-xl text-xs sm:text-sm font-bold transition-all tap-active flex items-center justify-center gap-1.5 text-center",
                     mealsPerDay === 2
                       ? "bg-[#124233] text-white shadow-xs"
                       : "text-[#124233]/70 hover:text-[#124233]"
                   )}
                 >
-                  <span>2 Meals (Lunch + Dinner)</span>
-                  <span className="text-[10px] font-black bg-[#899545] text-white px-2 py-0.5 rounded-full uppercase">
-                    -₹10 2nd Meal
+                  <span>2 Meals (L+D)</span>
+                  <span className="text-[9px] sm:text-[10px] font-black bg-[#899545] text-white px-1.5 py-0.5 rounded-full uppercase">
+                    -₹10
                   </span>
                 </button>
               </div>
             </div>
           </div>
 
-          {/* Color Legend */}
-          <div className="pt-4 border-t border-gray-100 flex flex-wrap items-center gap-4 text-xs font-medium text-gray-600">
-            <span className="text-[10px] uppercase font-bold text-gray-400">Color Legend:</span>
-            <div className="flex items-center gap-1.5">
-              <span className="w-3 h-3 rounded-full bg-[#899545]" />
-              <span>5 Rotating Chicken Styles</span>
+          {/* Color Legend (Mobile horizontal scroll chip strip, desktop flex wrap) */}
+          <div className="pt-3 sm:pt-4 border-t border-gray-100 flex items-center gap-2 overflow-x-auto scrollbar-none pb-1 text-xs font-medium text-gray-600">
+            <span className="text-[10px] uppercase font-bold text-gray-400 shrink-0">Color Guide:</span>
+            <div className="flex items-center gap-1.5 bg-gray-50 border border-gray-100 px-2.5 py-1 rounded-full shrink-0">
+              <span className="w-2.5 h-2.5 rounded-full bg-[#899545]" />
+              <span className="text-[11px]">5 Rotating Chicken Styles</span>
             </div>
-            <div className="flex items-center gap-1.5">
-              <span className="w-3 h-3 rounded-full bg-sky-500" />
-              <span>Coastal Fish (Wednesdays)</span>
+            <div className="flex items-center gap-1.5 bg-gray-50 border border-gray-100 px-2.5 py-1 rounded-full shrink-0">
+              <span className="w-2.5 h-2.5 rounded-full bg-sky-500" />
+              <span className="text-[11px]">Coastal Fish (Wed)</span>
             </div>
-            <div className="flex items-center gap-1.5">
-              <span className="w-3 h-3 rounded-full bg-emerald-500" />
-              <span>Soya Chunks Sukka</span>
+            <div className="flex items-center gap-1.5 bg-gray-50 border border-gray-100 px-2.5 py-1 rounded-full shrink-0">
+              <span className="w-2.5 h-2.5 rounded-full bg-emerald-500" />
+              <span className="text-[11px]">Soya Chunks Sukka</span>
             </div>
-            <div className="flex items-center gap-1.5">
-              <span className="w-3 h-3 rounded-full bg-amber-500" />
-              <span>Smoked Paneer Tikka</span>
+            <div className="flex items-center gap-1.5 bg-gray-50 border border-gray-100 px-2.5 py-1 rounded-full shrink-0">
+              <span className="w-2.5 h-2.5 rounded-full bg-amber-500" />
+              <span className="text-[11px]">Smoked Paneer Tikka</span>
             </div>
-            <div className="flex items-center gap-1.5">
-              <span className="w-3 h-3 rounded-full bg-purple-500" />
-              <span>Organic Firm Tofu</span>
+            <div className="flex items-center gap-1.5 bg-gray-50 border border-gray-100 px-2.5 py-1 rounded-full shrink-0">
+              <span className="w-2.5 h-2.5 rounded-full bg-purple-500" />
+              <span className="text-[11px]">Organic Firm Tofu</span>
             </div>
           </div>
         </div>
 
         {/* 3. The 24-Day Calendar Grid + Sticky Checkout Panel */}
-        <div className="mt-8 grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
-          {/* Calendar Grid (24 operating days, Mon-Sat) */}
-          <div className="lg:col-span-8 space-y-6">
-            <div className="bg-white rounded-3xl p-5 sm:p-7 border border-black/5 shadow-sm space-y-6">
+        <div className="mt-6 sm:mt-8 grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-8 items-start">
+          {/* Calendar Section (Mobile View & Desktop Grid) */}
+          <div className="lg:col-span-8 space-y-5">
+            {/* Mobile Calendar Experience (< lg) */}
+            <div className="block lg:hidden bg-white rounded-3xl p-4 sm:p-5 border border-black/5 shadow-sm space-y-4">
+              <div className="flex items-center justify-between">
+                <div>
+                  <h3 className="font-heading font-black text-lg text-[#124233]">
+                    24-Day Schedule
+                  </h3>
+                  <p className="text-[11px] text-gray-500">
+                    Tap any day to inspect the 5-item box or skip
+                  </p>
+                </div>
+                <span className="text-[11px] font-bold text-[#899545] bg-[#F5F8EC] px-2.5 py-1 rounded-full shrink-0">
+                  {activeDays.length}/24 Active
+                </span>
+              </div>
+
+              {/* Week Tab Selector */}
+              <div className="flex items-center gap-1.5 overflow-x-auto scrollbar-none pb-1">
+                {[
+                  { id: 0, label: 'Week 1', days: 'Days 1–6' },
+                  { id: 1, label: 'Week 2', days: 'Days 7–12' },
+                  { id: 2, label: 'Week 3', days: 'Days 13–18' },
+                  { id: 3, label: 'Week 4', days: 'Days 19–24' },
+                  { id: 'all', label: 'All 24', days: 'Full Month' },
+                ].map((tab) => {
+                  const isActive = mobileWeekTab === tab.id;
+                  const weekActiveCount = tab.id === 'all'
+                    ? activeDays.length
+                    : calendarDays.filter((d) => d.weekIndex === tab.id && !d.isSkipped).length;
+
+                  return (
+                    <button
+                      key={tab.id}
+                      type="button"
+                      onClick={() => setMobileWeekTab(tab.id as any)}
+                      className={cn(
+                        "px-3 py-2 rounded-xl text-xs font-bold transition-all whitespace-nowrap shrink-0 flex items-center gap-1.5 tap-active",
+                        isActive
+                          ? "bg-[#124233] text-white shadow-xs"
+                          : "bg-[#F5F8EC] text-[#124233]/70 hover:text-[#124233]"
+                      )}
+                    >
+                      <span>{tab.label}</span>
+                      <span className={cn(
+                        "text-[10px] px-1.5 py-0.2 rounded-full font-mono",
+                        isActive ? "bg-white/20 text-white" : "bg-black/5 text-gray-500"
+                      )}>
+                        {weekActiveCount}
+                      </span>
+                    </button>
+                  );
+                })}
+              </div>
+
+              {/* Mobile Cards Grid */}
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-1">
+                {displayedMobileDays.map((cDay) => {
+                  const lunch = cDay.menu.lunch;
+                  const theme = getMainColorTheme(lunch.items.main.name, cDay.diet === 'veg');
+                  const isSkipped = cDay.isSkipped;
+                  const dayGlobalIndex = monthlyDays.findIndex((d) => d.dateStr === cDay.dateStr) + 1;
+
+                  return (
+                    <div
+                      key={cDay.dateStr}
+                      className={cn(
+                        "p-3.5 rounded-2xl border transition-all duration-200 flex flex-col justify-between gap-3 relative",
+                        isSkipped
+                          ? "bg-gray-100/80 border-gray-200 opacity-60"
+                          : `${theme.bg} ${theme.border} shadow-xs`
+                      )}
+                    >
+                      {/* Top Bar: Date, Day Number & Allergy Warning */}
+                      <div className="flex items-start justify-between gap-2">
+                        <div className="flex items-center gap-2">
+                          <span className="font-heading font-black text-sm text-[#124233]">
+                            {cDay.dayOfWeek}, {cDay.formatted}
+                          </span>
+                          <span className="text-[10px] font-bold text-gray-500 bg-white/80 px-1.5 py-0.5 rounded-md border border-black/5">
+                            Day {dayGlobalIndex}
+                          </span>
+                        </div>
+
+                        <div className="flex items-center gap-1.5">
+                          {lunch.hasPeanut && (
+                            <span className="text-xs bg-amber-100 px-1 py-0.5 rounded-md" title="Contains Peanut Sundal">
+                              🥜 Peanut
+                            </span>
+                          )}
+                          <span className={cn("w-2.5 h-2.5 rounded-full shrink-0", isSkipped ? "bg-gray-400" : theme.dot)} />
+                        </div>
+                      </div>
+
+                      {/* Main Protein Dish Name & Portion Macros */}
+                      <div className="space-y-1">
+                        <span className={cn(
+                          "font-heading font-bold text-sm block leading-snug",
+                          isSkipped ? "text-gray-400 line-through" : "text-[#124233]"
+                        )}>
+                          {lunch.items.main.name}
+                        </span>
+
+                        <div className="flex items-center gap-2 text-xs font-mono text-gray-500">
+                          <span className="font-bold text-[#899545]">{lunch.totals.protein}g Protein</span>
+                          <span>•</span>
+                          <span>{lunch.totals.calories} kcal</span>
+                          <span>•</span>
+                          <span className="capitalize">{cDay.diet}</span>
+                        </div>
+                      </div>
+
+                      {/* Interactive Buttons */}
+                      <div className="flex items-center justify-between gap-2 pt-2 border-t border-black/5">
+                        <button
+                          type="button"
+                          onClick={() => setInspectedDay(cDay)}
+                          className="text-xs font-bold text-[#124233] hover:underline flex items-center gap-1 py-1 tap-active"
+                        >
+                          <span>5-Item Box</span>
+                          <ArrowRight className="w-3 h-3 text-[#899545]" />
+                        </button>
+
+                        <button
+                          type="button"
+                          onClick={() => toggleSkipDay(cDay.dateStr)}
+                          className={cn(
+                            "px-3 py-1 rounded-xl text-xs font-bold transition-all tap-active",
+                            isSkipped
+                              ? "bg-emerald-100 text-emerald-800 hover:bg-emerald-200"
+                              : "bg-white text-red-600 border border-red-200 hover:bg-red-50"
+                          )}
+                        >
+                          {isSkipped ? "Restore Day" : "Skip Day"}
+                        </button>
+                      </div>
+                    </div>
+                  );
+                })}
+              </div>
+
+              <div className="pt-3 border-t border-gray-100 flex items-center justify-between text-[11px] text-gray-400">
+                <span>* Sundays are closed for kitchen sanitisation</span>
+                <span>Free credit for skipped days</span>
+              </div>
+            </div>
+
+            {/* Desktop Calendar Experience (>= lg) */}
+            <div className="hidden lg:block bg-white rounded-3xl p-5 sm:p-7 border border-black/5 shadow-sm space-y-6">
               <div className="flex items-center justify-between">
                 <div>
                   <h3 className="font-heading font-black text-xl text-[#124233]">
@@ -360,7 +518,7 @@ export default function MonthlyPlanPage() {
 
               {/* Grid Cells (4 rows of 6 days) */}
               <div className="grid grid-cols-6 gap-2 sm:gap-3">
-                {calendarDays.map((cDay, idx) => {
+                {calendarDays.map((cDay) => {
                   const lunch = cDay.menu.lunch;
                   const theme = getMainColorTheme(lunch.items.main.name, cDay.diet === 'veg');
                   const isSkipped = cDay.isSkipped;
@@ -423,9 +581,9 @@ export default function MonthlyPlanPage() {
             </div>
           </div>
 
-          {/* Right Column: Pricing & Checkout Sticky Panel */}
-          <div className="lg:col-span-4 sticky top-24 space-y-4">
-            <div className="bg-white rounded-3xl p-6 border border-black/5 shadow-xl shadow-[#124233]/5 space-y-5">
+          {/* Right Column: Pricing & Checkout Panel */}
+          <div className="lg:col-span-4 lg:sticky lg:top-24 space-y-4">
+            <div className="bg-white rounded-3xl p-5 sm:p-6 border border-black/5 shadow-xl shadow-[#124233]/5 space-y-5">
               <div className="pb-4 border-b border-gray-100">
                 <span className="text-[10px] font-black uppercase tracking-wider text-gray-400">Monthly Subscription</span>
                 <h3 className="font-heading font-black text-xl text-[#124233] mt-0.5">
@@ -490,10 +648,10 @@ export default function MonthlyPlanPage() {
                       type="button"
                       onClick={() => setLunchSlot(slot)}
                       className={cn(
-                        "p-2 rounded-xl border text-center font-bold transition-all",
+                        "p-2.5 rounded-xl border text-center font-bold transition-all tap-active text-xs",
                         lunchSlot === slot
                           ? "bg-[#124233] text-white border-[#124233]"
-                          : "bg-gray-50 text-gray-700 border-gray-200"
+                          : "bg-gray-50 text-gray-700 border-gray-200 hover:border-gray-300"
                       )}
                     >
                       {slot}
@@ -511,10 +669,10 @@ export default function MonthlyPlanPage() {
                           type="button"
                           onClick={() => setDinnerSlot(slot)}
                           className={cn(
-                            "p-2 rounded-xl border text-center font-bold transition-all",
+                            "p-2.5 rounded-xl border text-center font-bold transition-all tap-active text-xs",
                             dinnerSlot === slot
                               ? "bg-[#124233] text-white border-[#124233]"
-                              : "bg-gray-50 text-gray-700 border-gray-200"
+                              : "bg-gray-50 text-gray-700 border-gray-200 hover:border-gray-300"
                           )}
                         >
                           {slot}
@@ -535,7 +693,7 @@ export default function MonthlyPlanPage() {
                 <div className="flex justify-between text-gray-600">
                   <span>Monthly Rate / Meal</span>
                   <span className="font-mono font-bold">
-                    {dietVariation === 'non-veg' ? '₹269 NV' : dietVariation === 'veg' ? '₹249 V' : '₹269 / ₹249'}
+                    {dietVariation === 'non-veg' ? '₹269 NV' : dietVariation === 'veg' ? '₹239 V' : '₹269 / ₹239'}
                   </span>
                 </div>
 
@@ -591,10 +749,41 @@ export default function MonthlyPlanPage() {
         </div>
       </section>
 
+      {/* Mobile Sticky Checkout Action Bar */}
+      <div className="lg:hidden fixed bottom-0 left-0 right-0 z-40 bg-white/95 backdrop-blur-md border-t border-[#124233]/15 px-4 py-3 shadow-[0_-8px_25px_rgba(0,0,0,0.12)]">
+        <div className="max-w-md mx-auto flex items-center justify-between gap-3">
+          <div>
+            <div className="flex items-baseline gap-1.5">
+              <span className="font-heading font-black text-2xl text-[#124233]">
+                ₹{paymentMode === 'autopay' ? weeklyAutoPayAmount : totalPrice}
+              </span>
+              <span className="text-[11px] font-bold text-gray-500">
+                {paymentMode === 'autopay' ? '/week' : 'total'}
+              </span>
+            </div>
+            <div className="flex items-center gap-1.5 text-[10px] text-gray-500 font-medium">
+              <span className="text-[#899545] font-bold">{activeDays.length}/24 Days</span>
+              <span>•</span>
+              <span className="capitalize">{paymentMode === 'autopay' ? 'UPI AutoPay' : 'Prepaid'}</span>
+            </div>
+          </div>
+
+          <button
+            type="button"
+            onClick={handleProceed}
+            disabled={activeDays.length === 0}
+            className="bg-[#124233] hover:bg-[#0E3529] disabled:bg-gray-300 text-white py-3 px-5 rounded-2xl font-heading font-bold text-xs tracking-wide shadow-md shadow-[#124233]/20 flex items-center gap-1.5 tap-active shrink-0 transition-transform active:scale-95"
+          >
+            <span>{paymentMode === 'autopay' ? 'Setup AutoPay' : 'Prepay Plan'}</span>
+            <ArrowRight className="w-3.5 h-3.5" />
+          </button>
+        </div>
+      </div>
+
       {/* 4. Day Inspection Modal (Opens on day tap) */}
       {inspectedDay && (
-        <div className="fixed inset-0 z-50 bg-black/50 backdrop-blur-xs flex items-center justify-center p-4 animate-in fade-in duration-150">
-          <div className="bg-white rounded-3xl max-w-2xl w-full max-h-[90vh] overflow-y-auto border border-black/10 shadow-2xl p-6 space-y-5 animate-in zoom-in-95 duration-150">
+        <div className="fixed inset-0 z-50 bg-black/50 backdrop-blur-xs flex items-end sm:items-center justify-center p-0 sm:p-4 animate-in fade-in duration-150">
+          <div className="bg-white rounded-t-3xl sm:rounded-3xl max-w-2xl w-full max-h-[88vh] overflow-y-auto border border-black/10 shadow-2xl p-5 sm:p-6 space-y-4 sm:space-y-5 animate-in slide-in-from-bottom sm:zoom-in-95 duration-150">
             {/* Modal Header */}
             <div className="flex items-start justify-between pb-4 border-b border-gray-100">
               <div>
@@ -736,8 +925,8 @@ export default function MonthlyPlanPage() {
 
       {/* 5. Cashfree UPI AutoPay Mock Modal */}
       {isCashfreeModalOpen && (
-        <div className="fixed inset-0 z-50 bg-black/60 backdrop-blur-xs flex items-center justify-center p-4 animate-in fade-in duration-200">
-          <div className="bg-white rounded-3xl max-w-md w-full border border-black/10 shadow-2xl p-6 sm:p-7 space-y-5 animate-in zoom-in-95 duration-150">
+        <div className="fixed inset-0 z-50 bg-black/60 backdrop-blur-xs flex items-end sm:items-center justify-center p-0 sm:p-4 animate-in fade-in duration-200">
+          <div className="bg-white rounded-t-3xl sm:rounded-3xl max-w-md w-full border border-black/10 shadow-2xl p-5 sm:p-7 space-y-4 sm:space-y-5 animate-in slide-in-from-bottom sm:zoom-in-95 duration-150">
             {/* Cashfree Mock Header */}
             <div className="flex items-center justify-between pb-3 border-b border-gray-100">
               <div className="flex items-center gap-2">

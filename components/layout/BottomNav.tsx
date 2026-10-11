@@ -32,8 +32,8 @@ export function BottomNav() {
 
   if (!mounted) return null;
 
-  // Hide on checkout and admin routes
-  if (pathname === '/checkout' || pathname.startsWith('/admin')) {
+  // Hide on checkout, tomorrow trial modal, weekly plan modal, monthly plan page, and admin routes
+  if (pathname === '/checkout' || pathname === '/tomorrow' || pathname === '/weekly' || pathname === '/monthly' || pathname.startsWith('/admin')) {
     return null;
   }
 

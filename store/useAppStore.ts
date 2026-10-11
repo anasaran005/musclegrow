@@ -15,11 +15,27 @@ import {
   TrialOrderConfig,
   WeeklyOrderConfig,
   MonthlyOrderConfig,
+  UserLocation,
+  Order,
 } from '@/types';
 import boxesData from '@/data/boxes.json';
 import sidesData from '@/data/sides.json';
 import addonsData from '@/data/addons.json';
 import plansData from '@/data/plans.json';
+
+const defaultLocation: UserLocation = {
+  area: 'Kuniyamuthur',
+  pincode: '641008',
+  city: 'Coimbatore',
+  lat: 10.9575,
+  lng: 76.9530,
+  distanceKm: 0.0,
+  tier: 'core',
+  deliveryFee: 0,
+  isDeliverable: true,
+  formattedAddress: 'Kuniyamuthur, 641008, Coimbatore',
+  detectedViaGps: false,
+};
 
 const defaultProfile: UserProfile = {
   id: "user-1",
@@ -119,6 +135,10 @@ interface AppState {
   appliedCoupon: Coupon | null;
   applyCoupon: (coupon: Coupon | null) => void;
 
+  // Real-time Geofenced User Location
+  currentLocation: UserLocation;
+  setCurrentLocation: (location: UserLocation) => void;
+
   // Navigation drawer state
   isNavDrawerOpen: boolean;
   setNavDrawerOpen: (open: boolean) => void;
@@ -138,6 +158,8 @@ interface AppState {
   setWeeklyOrder: (order: WeeklyOrderConfig | null) => void;
   monthlyOrder: MonthlyOrderConfig | null;
   setMonthlyOrder: (order: MonthlyOrderConfig | null) => void;
+  placedOrders: Order[];
+  addPlacedOrder: (order: Order) => void;
 
   // Computed Calculation Helpers
   getPlanMealCount: () => number;
@@ -310,6 +332,9 @@ export const useAppStore = create<AppState>()(
       appliedCoupon: null,
       applyCoupon: (coupon) => set({ appliedCoupon: coupon }),
 
+      currentLocation: defaultLocation,
+      setCurrentLocation: (loc) => set({ currentLocation: loc }),
+
       subscription: {
         id: "sub-9021",
         planId: "plan-6day-weekly",
@@ -371,6 +396,11 @@ export const useAppStore = create<AppState>()(
       setWeeklyOrder: (order) => set({ weeklyOrder: order, activeCheckoutType: 'weekly' }),
       monthlyOrder: null,
       setMonthlyOrder: (order) => set({ monthlyOrder: order, activeCheckoutType: 'monthly' }),
+      placedOrders: [],
+      addPlacedOrder: (order) =>
+        set((state) => ({
+          placedOrders: [order, ...(state.placedOrders || [])],
+        })),
 
       getPlanMealCount: () => {
         const { selectedDays, dayConfigs } = get();
@@ -564,6 +594,7 @@ export const useAppStore = create<AppState>()(
         trialOrder: state.trialOrder,
         weeklyOrder: state.weeklyOrder,
         monthlyOrder: state.monthlyOrder,
+        currentLocation: state.currentLocation,
       }),
     }
   )

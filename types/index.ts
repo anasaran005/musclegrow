@@ -155,8 +155,28 @@ export interface DeliveryZone {
   pincode: string;
   area: string;
   isDeliverable: boolean;
+  tier?: 'core' | 'phase2' | 'out-of-range';
+  deliveryFee?: number;
+  distanceKm?: number;
   avgDeliveryMinutes: number;
   slots: string[];
+  description?: string;
+  lat?: number;
+  lng?: number;
+}
+
+export interface UserLocation {
+  area: string;
+  pincode: string;
+  city: string;
+  lat?: number;
+  lng?: number;
+  distanceKm?: number;
+  tier: 'core' | 'phase2' | 'out-of-range';
+  deliveryFee: number;
+  isDeliverable: boolean;
+  formattedAddress?: string;
+  detectedViaGps?: boolean;
 }
 
 export interface UserProfile {

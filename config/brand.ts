@@ -20,9 +20,9 @@ export const BRAND = {
   },
   cutoffTime: "9:00 PM previous night",
   pricing: {
-    subscriptionMin: 250,
-    subscriptionMax: 300,
-    oneOffAvg: 330,
+    subscriptionMin: 239,
+    subscriptionMax: 289,
+    oneOffAvg: 319,
   },
   socials: {
     instagram: "https://instagram.com/musclegrow.fit",

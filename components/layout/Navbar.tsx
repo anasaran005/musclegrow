@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { usePathname, useRouter } from 'next/navigation';
@@ -24,24 +24,16 @@ import {
   Search,
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
-
-const COIMBATORE_ZONES = [
-  { area: 'RS Puram', pincode: '641002' },
-  { area: 'Peelamedu', pincode: '641004' },
-  { area: 'Gandhipuram', pincode: '641012' },
-  { area: 'Saibaba Colony', pincode: '641011' },
-  { area: 'Race Course', pincode: '641018' },
-  { area: 'Saravanampatti', pincode: '641035' },
-];
+import { LocationSelector } from '@/components/layout/LocationSelector';
 
 export function Navbar() {
   const router = useRouter();
   const pathname = usePathname();
   const [mounted, setMounted] = useState(false);
   const { isLoggedIn, user, isNavDrawerOpen, setNavDrawerOpen } = useAppStore();
-  const [selectedZone, setSelectedZone] = useState(COIMBATORE_ZONES[0]);
-  const [zoneDropdownOpen, setZoneDropdownOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
+  const [isMobileNavVisible, setIsMobileNavVisible] = useState(true);
+  const lastScrollYRef = useRef(0);
 
   const isHomePage = pathname === '/';
 
@@ -53,6 +45,75 @@ export function Navbar() {
 
   useEffect(() => {
     setMounted(true);
+  }, []);
+
+  // Reset navbar visibility on page navigation
+  useEffect(() => {
+    setIsMobileNavVisible(true);
+    lastScrollYRef.current = typeof window !== 'undefined' ? window.scrollY : 0;
+  }, [pathname]);
+
+  // Keep navbar visible if drawer is open
+  useEffect(() => {
+    if (isNavDrawerOpen) {
+      setIsMobileNavVisible(true);
+    }
+  }, [isNavDrawerOpen]);
+
+  // Mobile navbar scroll direction auto-hide (up on scroll down, down on scroll up)
+  useEffect(() => {
+    let ticking = false;
+
+    const handleScroll = () => {
+      if (ticking) return;
+      ticking = true;
+
+      window.requestAnimationFrame(() => {
+        // If an input is focused (e.g. searching dishes), keep navbar visible
+        if (document.activeElement?.tagName === 'INPUT') {
+          setIsMobileNavVisible(true);
+          ticking = false;
+          return;
+        }
+
+        const currentScrollY = window.scrollY;
+        const lastScrollY = lastScrollYRef.current;
+        const diff = currentScrollY - lastScrollY;
+
+        // If at the top of the page, always show navbar
+        if (currentScrollY <= 30) {
+          setIsMobileNavVisible(true);
+          lastScrollYRef.current = currentScrollY;
+          ticking = false;
+          return;
+        }
+
+        // Avoid rubber-banding jitter at bottom of page
+        const scrollHeight = document.documentElement.scrollHeight;
+        const clientHeight = window.innerHeight;
+        if (currentScrollY + clientHeight >= scrollHeight - 20) {
+          ticking = false;
+          return;
+        }
+
+        // Only trigger on intentional scroll delta (> 6px)
+        if (Math.abs(diff) > 6) {
+          if (diff > 0 && currentScrollY > 50) {
+            // Scrolling down -> slide mobile navbar up
+            setIsMobileNavVisible(false);
+          } else if (diff < 0) {
+            // Scrolling up -> slide mobile navbar back down
+            setIsMobileNavVisible(true);
+          }
+          lastScrollYRef.current = currentScrollY;
+        }
+
+        ticking = false;
+      });
+    };
+
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
   // Prevent background scroll when menu drawer is open
@@ -82,10 +143,10 @@ export function Navbar() {
 
   const navLinks = [
     { label: 'Home', href: '/', icon: Home, desc: 'Gramwise daily protein overview' },
+    { label: 'Weekly Menu', href: '/menu', icon: Utensils, desc: 'Rotating 6-day box menu with photos' },
     { label: 'Daily Trial Box', href: '/tomorrow', icon: Utensils, desc: "Tomorrow's rotating 5-item box" },
     { label: 'Weekly Plan', href: '/weekly', icon: Calendar, badge: 'Popular', desc: '6-day Mon–Sat routine with skip option' },
     { label: 'Monthly Lifestyle', href: '/monthly', icon: Calendar, desc: '24-day transformation calendar' },
-    { label: 'Build Your Own Box', href: '/custom', icon: Sparkles, badge: 'Coming Soon', desc: 'Custom macros and gram dialing' },
     { label: 'Central Kitchen Cook-Sheet', href: '/admin/cook-sheet', icon: Sliders, desc: 'Live daily batches & delivery roster' },
     { label: 'How It Works', href: '/how-it-works', icon: Sliders, desc: 'Digital kitchen weighing to delivery' },
     { label: 'Delivery Areas', href: '/delivery-areas', icon: MapPin, desc: 'Coimbatore coverage & pincodes' },
@@ -96,7 +157,12 @@ export function Navbar() {
     <>
       {/* Top Navbar for non-home pages (Desktop matches the clean home hero navbar) */}
       {!isHomePage && (
-        <header className="sticky top-0 z-40 w-full bg-[#E8F1D4] sm:bg-[#E8F1D4]/95 backdrop-blur-md transition-all">
+        <header
+          className={cn(
+            "sticky top-0 z-40 w-full bg-[#E8F1D4] sm:bg-[#E8F1D4]/95 backdrop-blur-md transition-transform duration-300 ease-in-out will-change-transform",
+            !isMobileNavVisible ? "-translate-y-full md:translate-y-0" : "translate-y-0"
+          )}
+        >
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3.5 sm:py-5">
             {/* Desktop Navbar (Hidden on mobile, undisturbed) */}
             <div className="hidden md:flex items-center justify-between">
@@ -114,6 +180,17 @@ export function Navbar() {
 
               {/* Center Clean Typography Navigation Links */}
               <nav className="flex items-center gap-6 lg:gap-8">
+                <Link
+                  href="/menu"
+                  className={cn(
+                    "text-sm font-bold tracking-wide transition-colors",
+                    pathname === '/menu'
+                      ? "text-[#899545]"
+                      : "text-[#124233] hover:text-[#899545]"
+                  )}
+                >
+                  Menu
+                </Link>
                 <Link
                   href="/tomorrow"
                   className={cn(
@@ -148,17 +225,6 @@ export function Navbar() {
                   Monthly Plan
                 </Link>
                 <Link
-                  href="/custom"
-                  className={cn(
-                    "text-sm font-bold tracking-wide transition-colors",
-                    pathname === '/custom'
-                      ? "text-[#899545]"
-                      : "text-[#124233] hover:text-[#899545]"
-                  )}
-                >
-                  Custom Box
-                </Link>
-                <Link
                   href="/delivery-areas"
                   className={cn(
                     "text-sm font-bold tracking-wide transition-colors",
@@ -171,8 +237,10 @@ export function Navbar() {
                 </Link>
               </nav>
 
-              {/* Right Profile Circle Button */}
+              {/* Right Profile Circle Button & Location Selector */}
               <div className="flex items-center gap-3">
+                <LocationSelector variant="desktop" />
+
                 <button
                   type="button"
                   onClick={() => setNavDrawerOpen(true)}
@@ -195,68 +263,7 @@ export function Navbar() {
 
             {/* Mobile Header: Swiggy style (Location on Left, Profile Avatar on Right - No navbar/logo) */}
             <div className="flex md:hidden items-center justify-between">
-              <div className="relative">
-                <button
-                  type="button"
-                  onClick={() => setZoneDropdownOpen(!zoneDropdownOpen)}
-                  className="flex items-center gap-1.5 text-[#124233] tap-active"
-                >
-                  <div className="w-8 h-8 rounded-full bg-[#124233]/10 flex items-center justify-center">
-                    <MapPin className="w-4 h-4 text-[#124233]" />
-                  </div>
-                  <div className="text-left leading-tight">
-                    <div className="flex items-center gap-1 font-heading font-black text-sm text-[#124233]">
-                      <span>{selectedZone.area}</span>
-                      <ChevronDown className="w-3.5 h-3.5 text-[#124233]/70" />
-                    </div>
-                    <span className="text-[10px] text-gray-500 font-semibold">{selectedZone.pincode}, Coimbatore</span>
-                  </div>
-                </button>
-
-                {/* Mobile Location Dropdown */}
-                {zoneDropdownOpen && (
-                  <>
-                    <div
-                      className="fixed inset-0 z-30"
-                      onClick={() => setZoneDropdownOpen(false)}
-                    />
-                    <div className="absolute left-0 mt-2 w-64 bg-white rounded-2xl shadow-2xl border border-gray-100 py-2 z-40 animate-in fade-in zoom-in-95 duration-150">
-                      <div className="px-3.5 py-1.5 text-[10px] font-bold uppercase tracking-wider text-gray-400">
-                        Select Coimbatore Delivery Area
-                      </div>
-                      {COIMBATORE_ZONES.map((zone) => (
-                        <button
-                          key={zone.pincode}
-                          type="button"
-                          onClick={() => {
-                            setSelectedZone(zone);
-                            setZoneDropdownOpen(false);
-                          }}
-                          className={`w-full flex items-center justify-between px-3.5 py-2 text-left text-xs font-semibold hover:bg-[#F5F8EC] transition-colors ${
-                            selectedZone.pincode === zone.pincode
-                              ? 'bg-[#F5F8EC] text-[#124233] font-bold'
-                              : 'text-gray-700'
-                          }`}
-                        >
-                          <span>{zone.area}</span>
-                          <span className="text-[10px] font-mono text-gray-400">
-                            {zone.pincode}
-                          </span>
-                        </button>
-                      ))}
-                      <div className="border-t border-gray-100 mt-1 pt-1.5 px-3.5 py-1">
-                        <Link
-                          href="/delivery-areas"
-                          className="text-[11px] font-bold text-[#899545] hover:underline"
-                          onClick={() => setZoneDropdownOpen(false)}
-                        >
-                          View all 12 delivery pincodes &rarr;
-                        </Link>
-                      </div>
-                    </div>
-                  </>
-                )}
-              </div>
+              <LocationSelector variant="mobile" />
 
               {/* Right Search Bar on Top Right (Replaces Profile Avatar) */}
               <form onSubmit={handleSearchSubmit} className="relative flex-1 max-w-[200px] sm:max-w-xs">

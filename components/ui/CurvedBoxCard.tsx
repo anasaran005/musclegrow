@@ -1,11 +1,11 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { Box } from '@/types';
-import { DailyMenuResult, DietType } from '@/lib/menu-engine';
-import { ArrowUpRight, ArrowRight, ChevronDown } from 'lucide-react';
+import { DailyMenuResult, DietType, PRICING } from '@/lib/menu-engine';
+import { ArrowUpRight, ArrowRight, ChevronDown, X, Sparkles, CheckCircle2, Info, ShieldCheck } from 'lucide-react';
 import { cn, formatCurrency } from '@/lib/utils';
 
 export interface CurvedBoxCardProps {
@@ -29,7 +29,8 @@ export function CurvedBoxCard({
   isToday = false,
   box,
 }: CurvedBoxCardProps) {
-  const [showDetails, setShowDetails] = useState(false);
+  const [showDetailsModal, setShowDetailsModal] = useState(false);
+  const [showPurchaseModal, setShowPurchaseModal] = useState(false);
   const CARD_BG = '#ffffff';
 
   // 1. If dynamic menu is provided (5-item rotation engine)
@@ -37,8 +38,8 @@ export function CurvedBoxCard({
     const meal = menu.lunch;
     const mainItem = meal.items.main;
     const dayOfWeekAbbr = dayInfo ? dayInfo.dayOfWeek : menu.dayOfWeek;
-    const price = diet === 'veg' ? 279 : 299;
-    const weeklyPrice = diet === 'veg' ? 259 : 279;
+    const price = PRICING.trial[diet];
+    const weeklyPrice = PRICING.weekly[diet];
     const orderUrl = `/tomorrow?date=${dayInfo?.dateStr || menu.date}&diet=${diet}`;
 
     return (
@@ -90,14 +91,15 @@ export function CurvedBoxCard({
                 <path d="M0 24 C13.2548 24 24 13.2548 24 0 V24 H0 Z" />
               </svg>
 
-              {/* Circular Arrow Button */}
-              <Link
-                href={orderUrl}
-                className="w-12 h-12 rounded-full bg-gray-900 text-white flex items-center justify-center hover:bg-primary hover:text-white hover:scale-110 active:scale-95 transition-all duration-300 shadow-md group/btn"
-                aria-label={`View ${mainItem.name} breakdown`}
+              {/* Circular Action Button */}
+              <button
+                type="button"
+                onClick={() => setShowPurchaseModal(true)}
+                className="w-12 h-12 rounded-full bg-gray-900 text-white flex items-center justify-center hover:bg-primary hover:text-white hover:scale-110 active:scale-95 transition-all duration-300 shadow-md group/btn cursor-pointer"
+                aria-label={`Purchase options for ${mainItem.name}`}
               >
                 <ArrowUpRight className="w-5 h-5 group-hover/btn:translate-x-0.5 group-hover/btn:-translate-y-0.5 transition-transform stroke-[2.5]" />
-              </Link>
+              </button>
             </div>
           </div>
 
@@ -123,11 +125,15 @@ export function CurvedBoxCard({
                 </span>
               )}
 
-              <Link href={orderUrl} className="block group/title flex-1 min-w-0">
+              <button
+                type="button"
+                onClick={() => setShowPurchaseModal(true)}
+                className="block text-left group/title flex-1 min-w-0 cursor-pointer"
+              >
                 <h3 className="font-heading font-black text-xl sm:text-2xl text-gray-900 group-hover/title:text-primary transition-colors tracking-tight line-clamp-1">
                   {mainItem.name}
                 </h3>
-              </Link>
+              </button>
             </div>
 
             <p className="text-xs text-gray-500 mt-1.5 line-clamp-2 leading-relaxed">
@@ -169,108 +175,458 @@ export function CurvedBoxCard({
               </div>
             </div>
 
-            {/* Collapsible 5-Item Signature Box Breakdown */}
-            {showDetails && (
-              <div className="mt-3 p-3 rounded-2xl bg-gray-50/90 border border-gray-100 space-y-1.5 text-xs animate-in fade-in duration-200">
-                <p className="text-[10px] font-black uppercase tracking-wider text-gray-400 mb-1">
-                  5 Items Digitally Weighed Inside
-                </p>
-
-                {/* 1. Main */}
-                <div className="flex items-center justify-between">
-                  <span className="font-bold text-gray-800 flex items-center gap-1.5 truncate pr-2">
-                    <span className="text-sm shrink-0">
-                      {diet === 'non-veg' ? (dayOfWeekAbbr === 'Wed' ? '🐟' : '🍗') : '🧀'}
-                    </span>
-                    <span className="truncate">{mainItem.name}</span>
-                  </span>
-                  <span className="shrink-0 text-[10px] font-extrabold text-primary bg-primary/10 px-1.5 py-0.5 rounded">
-                    {mainItem.grams}g
-                  </span>
-                </div>
-
-                {/* 2. Protein Booster */}
-                <div className="flex items-center justify-between">
-                  <span className="font-medium text-gray-700 flex items-center gap-1.5 truncate pr-2">
-                    <span className="text-sm shrink-0">{diet === 'non-veg' ? '🥚' : '🌱'}</span>
-                    <span className="truncate">{meal.items.proteinSide.name}</span>
-                  </span>
-                  <span className="shrink-0 text-[10px] font-semibold text-gray-500 bg-white px-1.5 py-0.5 rounded border border-gray-200">
-                    {meal.items.proteinSide.grams}g
-                  </span>
-                </div>
-
-                {/* 3. Rotational Salad */}
-                <div className="flex items-center justify-between">
-                  <span className="font-medium text-gray-700 flex items-center gap-1.5 truncate pr-2">
-                    <span className="text-sm shrink-0">🥗</span>
-                    <span className="truncate">{meal.items.salad.name}</span>
-                  </span>
-                  <span className="shrink-0 text-[10px] font-semibold text-gray-500 bg-white px-1.5 py-0.5 rounded border border-gray-200">
-                    {meal.items.salad.grams}g
-                  </span>
-                </div>
-
-                {/* 4. Rotational Legume */}
-                <div className="flex items-center justify-between">
-                  <span className="font-medium text-gray-700 flex items-center gap-1.5 truncate pr-2">
-                    <span className="text-sm shrink-0">🫘</span>
-                    <span className="truncate">{meal.items.legume.name}</span>
-                  </span>
-                  <span className="shrink-0 text-[10px] font-semibold text-gray-500 bg-white px-1.5 py-0.5 rounded border border-gray-200">
-                    {meal.items.legume.grams}g
-                  </span>
-                </div>
-
-                {/* 5. Rotational Carb */}
-                <div className="flex items-center justify-between">
-                  <span className="font-medium text-gray-700 flex items-center gap-1.5 truncate pr-2">
-                    <span className="text-sm shrink-0">🌾</span>
-                    <span className="truncate">{meal.items.carb.name}</span>
-                  </span>
-                  <span className="shrink-0 text-[10px] font-semibold text-gray-500 bg-white px-1.5 py-0.5 rounded border border-gray-200">
-                    {meal.items.carb.grams}g
-                  </span>
-                </div>
-              </div>
-            )}
           </div>
         </div>
 
-        {/* Card Footer: Price & Direct Choose Action */}
-        <div className="mt-4 pt-3.5 border-t border-gray-100 flex items-center justify-between">
+        {/* Card Footer: Lowest Price & Direct Choose Action */}
+        <div className="mt-4 pt-3.5 border-t border-gray-100 flex items-center justify-between gap-2">
           <div>
             <span className="text-[10px] text-gray-400 uppercase tracking-wider block font-bold">
-              Daily Box Price
+              Get the box at
             </span>
-            <div className="flex items-baseline gap-1">
-              <span className="font-heading font-black text-xl sm:text-2xl text-gray-900">
-                ₹{price}
-              </span>
-              <span className="text-[10px] text-emerald-700 font-bold">
-                (₹{weeklyPrice} in plan)
+            <div className="mt-0.5">
+              <span className="font-heading font-black text-2xl text-gray-900 leading-none">
+                ₹{weeklyPrice}
               </span>
             </div>
+            <span className="text-[10px] text-gray-400 font-medium block mt-0.5">
+              or ₹{price} single trial
+            </span>
           </div>
 
-          <div className="flex items-center gap-1.5">
+          <div className="flex items-center gap-1.5 shrink-0">
             <button
               type="button"
-              onClick={() => setShowDetails(!showDetails)}
-              className="py-2 px-2.5 rounded-xl border border-gray-200 text-xs font-bold text-gray-700 hover:text-gray-900 hover:bg-gray-50 transition-all tap-active flex items-center gap-1"
+              onClick={() => setShowDetailsModal(true)}
+              className="py-2 px-2.5 rounded-xl border border-gray-200 text-xs font-bold text-gray-700 hover:text-gray-900 hover:bg-gray-50 transition-all tap-active flex items-center gap-1 cursor-pointer"
             >
-              <span>{showDetails ? 'Hide' : 'Details'}</span>
-              <ChevronDown className={cn("w-3.5 h-3.5 transition-transform duration-200", showDetails && "rotate-180")} />
+              <span>Details</span>
+              <Info className="w-3.5 h-3.5 text-gray-400" />
             </button>
-            <Link
-              href={orderUrl}
-              className="bg-cta hover:bg-cta-hover text-white text-xs font-bold py-2 px-3 rounded-xl shadow-cta/25 hover:shadow-md transition-all tap-active flex items-center gap-1"
+            <button
+              type="button"
+              onClick={() => setShowPurchaseModal(true)}
+              className="bg-cta hover:bg-cta-hover text-white text-xs font-bold py-2 px-3 rounded-xl shadow-cta/25 hover:shadow-md transition-all tap-active flex items-center gap-1 cursor-pointer"
             >
-              <span>Order</span>
+              <span>Get Box</span>
               <ArrowRight className="w-3.5 h-3.5" />
-            </Link>
+            </button>
           </div>
         </div>
+
+        {/* Box Details Slider from Bottom (Bottom Sheet Drawer) */}
+        {showDetailsModal && (
+          <div
+            className="fixed inset-0 z-50 flex items-end justify-center bg-black/60 backdrop-blur-sm animate-in fade-in duration-200"
+            onClick={() => setShowDetailsModal(false)}
+          >
+            <div
+              className="w-full max-w-5xl bg-white rounded-t-[32px] sm:rounded-t-[40px] shadow-2xl relative border-t border-gray-100 overflow-hidden text-left max-h-[92vh] sm:max-h-[88vh] flex flex-col animate-in slide-in-from-bottom duration-300 ease-out"
+              onClick={(e) => e.stopPropagation()}
+            >
+              {/* Mobile Drag Handle Bar */}
+              <div className="w-12 h-1.5 rounded-full bg-gray-300 mx-auto mt-3 mb-1 sm:hidden shrink-0" />
+
+              {/* Close Button */}
+              <button
+                type="button"
+                onClick={() => setShowDetailsModal(false)}
+                className="absolute top-4 right-4 sm:top-5 sm:right-6 p-2 rounded-full text-gray-400 hover:text-gray-800 bg-gray-100 hover:bg-gray-200 transition-colors cursor-pointer z-30 shadow-xs"
+                aria-label="Close meal details"
+              >
+                <X className="w-5 h-5" />
+              </button>
+
+              {/* Scrollable Content Container */}
+              <div className="overflow-y-auto flex-1 p-5 sm:p-7 md:p-8">
+                <div className="grid grid-cols-1 md:grid-cols-12 gap-6 md:gap-8 items-start">
+                  {/* LEFT COLUMN: Large Meal Tray Image + Quality Badges */}
+                  <div className="md:col-span-5 lg:col-span-5 space-y-4">
+                    {/* Big Tray Image Container */}
+                    <div className="relative w-full aspect-[4/3] md:aspect-square rounded-3xl overflow-hidden bg-gray-100 border border-gray-200/80 shadow-md group">
+                      <Image
+                        src={mainItem.image}
+                        alt={mainItem.name}
+                        fill
+                        className="object-cover group-hover:scale-105 transition-transform duration-500"
+                        priority
+                      />
+
+                      {/* Top Badges Floating Over Image */}
+                      <div className="absolute top-3.5 left-3.5 flex flex-wrap items-center gap-1.5 z-10">
+                        <span
+                          className={cn(
+                            "text-[10px] font-bold px-2.5 py-1 rounded-full uppercase tracking-wider backdrop-blur-md shadow-xs flex items-center gap-1.5",
+                            diet === 'veg'
+                              ? "bg-emerald-600/90 text-white"
+                              : "bg-red-600/90 text-white"
+                          )}
+                        >
+                          <span className="w-1.5 h-1.5 rounded-full bg-white" />
+                          <span>{diet === 'veg' ? 'Pure Veg' : 'Non-Veg'}</span>
+                        </span>
+                        <span className="text-[10px] font-bold px-2.5 py-1 rounded-full bg-black/60 backdrop-blur-md text-white shadow-xs">
+                          {dayInfo?.dayName || menu.dayOfWeek} Box
+                        </span>
+                      </div>
+
+                      {/* Bottom Banner Over Image */}
+                      <div className="absolute bottom-3 left-3 right-3 p-2.5 rounded-2xl bg-white/95 backdrop-blur-md border border-white/40 shadow-sm flex items-center justify-between text-xs z-10">
+                        <span className="font-bold text-gray-800">Fresh Daily Prep</span>
+                        <span className="font-mono font-bold text-emerald-800">
+                          ~{Math.round(meal.totals.protein)}g Protein
+                        </span>
+                      </div>
+                    </div>
+
+                    {/* Quality & Scale Guarantee Box */}
+                    <div className="p-4 rounded-2xl bg-[#F5F8EC] border border-[#124233]/10 space-y-2 text-xs text-[#124233]">
+                      <div className="flex items-center gap-2 font-bold text-xs text-[#124233]">
+                        <ShieldCheck className="w-4 h-4 text-emerald-700 shrink-0" />
+                        <span>Digital Kitchen Scale Certified</span>
+                      </div>
+                      <p className="text-[11px] text-gray-600 leading-relaxed">
+                        Every ingredient inside this 5-compartment eco bento tray is individually calibrated on digital kitchen scales to guarantee calibrated macros.
+                      </p>
+                      <div className="pt-2 border-t border-[#124233]/10 grid grid-cols-2 gap-2 text-[10px] font-semibold text-gray-700">
+                        <div className="flex items-center gap-1">
+                          <span>✓ 0 Refined Sugar</span>
+                        </div>
+                        <div className="flex items-center gap-1">
+                          <span>✓ Zero Palm Oil</span>
+                        </div>
+                        <div className="flex items-center gap-1">
+                          <span>✓ Twice Daily Fresh</span>
+                        </div>
+                        <div className="flex items-center gap-1">
+                          <span>✓ Hot Insulated Box</span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* RIGHT COLUMN: Meal Details, Macros & 5 Weighed Items */}
+                  <div className="md:col-span-7 lg:col-span-7 space-y-5">
+                    {/* Header */}
+                    <div>
+                      <span className="text-xs font-bold text-[#899545] uppercase tracking-wider block mb-1">
+                        Daily Signature Protein Bento
+                      </span>
+                      <h2 className="font-heading font-black text-2xl sm:text-3xl text-gray-900 tracking-tight">
+                        {mainItem.name}
+                      </h2>
+                      <p className="text-xs sm:text-sm text-gray-600 mt-2 leading-relaxed">
+                        {mainItem.description}
+                      </p>
+                    </div>
+
+                    {/* Macro Summary Cards */}
+                    <div>
+                      <span className="text-[10px] font-black uppercase tracking-wider text-gray-400 block mb-2">
+                        Nutritional Values Per Box
+                      </span>
+                      <div className="grid grid-cols-4 gap-2 sm:gap-2.5 text-center">
+                        <div className="p-2.5 bg-amber-50/70 rounded-2xl border border-amber-200/60">
+                          <span className="text-[9px] font-black uppercase text-amber-700 tracking-wider block">KCAL</span>
+                          <span className="font-heading font-black text-base sm:text-lg text-gray-900 mt-0.5 block">
+                            ~{Math.round(meal.totals.calories)}
+                          </span>
+                        </div>
+                        <div className="p-2.5 bg-emerald-50/70 rounded-2xl border border-emerald-200 ring-1 ring-emerald-500/20">
+                          <span className="text-[9px] font-black uppercase text-emerald-700 tracking-wider block">PROTEIN</span>
+                          <span className="font-heading font-black text-base sm:text-lg text-emerald-700 mt-0.5 block">
+                            ~{Math.round(meal.totals.protein)}g
+                          </span>
+                        </div>
+                        <div className="p-2.5 bg-purple-50/70 rounded-2xl border border-purple-200/60">
+                          <span className="text-[9px] font-black uppercase text-purple-700 tracking-wider block">FAT</span>
+                          <span className="font-heading font-black text-base sm:text-lg text-gray-900 mt-0.5 block">
+                            {Math.round(meal.totals.fat)}g
+                          </span>
+                        </div>
+                        <div className="p-2.5 bg-orange-50/70 rounded-2xl border border-orange-200/60">
+                          <span className="text-[9px] font-black uppercase text-orange-700 tracking-wider block">CARBS</span>
+                          <span className="font-heading font-black text-base sm:text-lg text-gray-900 mt-0.5 block">
+                            {Math.round(meal.totals.carbs)}g
+                          </span>
+                        </div>
+                      </div>
+                    </div>
+
+                    {/* 5 Digitally Weighed Items List */}
+                    <div className="p-4 sm:p-5 rounded-2xl bg-gray-50 border border-gray-100">
+                      <div className="flex items-center justify-between mb-3 pb-2 border-b border-gray-200/60">
+                        <span className="text-xs font-black uppercase tracking-wider text-gray-700">
+                          5 Items Digitally Weighed Inside
+                        </span>
+                        <span className="text-[10px] font-mono text-gray-500 bg-white px-2 py-0.5 rounded-full border border-gray-200 font-bold">
+                          Net Meal: ~620g
+                        </span>
+                      </div>
+
+                      <div className="space-y-2 text-xs">
+                        {/* 1. Main Dish */}
+                        <div className="flex items-center justify-between bg-white p-3 rounded-xl border border-gray-100 shadow-2xs">
+                          <div className="flex items-center gap-2.5">
+                            <span className="text-lg">{diet === 'non-veg' ? (dayOfWeekAbbr === 'Wed' ? '🐟' : '🍗') : '🧀'}</span>
+                            <div>
+                              <span className="font-bold text-gray-900 block">{mainItem.name}</span>
+                              <span className="text-[10px] text-gray-400">Primary Protein Core</span>
+                            </div>
+                          </div>
+                          <span className="text-xs font-black text-emerald-800 bg-emerald-50 border border-emerald-200/60 px-2.5 py-1 rounded-lg">
+                            {mainItem.grams}g
+                          </span>
+                        </div>
+
+                        {/* 2. Protein Booster Side */}
+                        <div className="flex items-center justify-between bg-white p-3 rounded-xl border border-gray-100 shadow-2xs">
+                          <div className="flex items-center gap-2.5">
+                            <span className="text-lg">{diet === 'non-veg' ? '🥚' : '🌱'}</span>
+                            <div>
+                              <span className="font-semibold text-gray-800 block">{meal.items.proteinSide.name}</span>
+                              <span className="text-[10px] text-gray-400">Protein Booster Side</span>
+                            </div>
+                          </div>
+                          <span className="text-xs font-semibold text-gray-700 bg-gray-100 px-2.5 py-1 rounded-lg">
+                            {meal.items.proteinSide.grams}g
+                          </span>
+                        </div>
+
+                        {/* 3. Rotational Salad */}
+                        <div className="flex items-center justify-between bg-white p-3 rounded-xl border border-gray-100 shadow-2xs">
+                          <div className="flex items-center gap-2.5">
+                            <span className="text-lg">🥗</span>
+                            <div>
+                              <span className="font-semibold text-gray-800 block">{meal.items.salad.name}</span>
+                              <span className="text-[10px] text-gray-400">Fresh Raw Micronutrients</span>
+                            </div>
+                          </div>
+                          <span className="text-xs font-semibold text-gray-700 bg-gray-100 px-2.5 py-1 rounded-lg">
+                            {meal.items.salad.grams}g
+                          </span>
+                        </div>
+
+                        {/* 4. Rotational Legume */}
+                        <div className="flex items-center justify-between bg-white p-3 rounded-xl border border-gray-100 shadow-2xs">
+                          <div className="flex items-center gap-2.5">
+                            <span className="text-lg">🫘</span>
+                            <div>
+                              <span className="font-semibold text-gray-800 block">{meal.items.legume.name}</span>
+                              <span className="text-[10px] text-gray-400">Complex Fiber &amp; Satiety</span>
+                            </div>
+                          </div>
+                          <span className="text-xs font-semibold text-gray-700 bg-gray-100 px-2.5 py-1 rounded-lg">
+                            {meal.items.legume.grams}g
+                          </span>
+                        </div>
+
+                        {/* 5. Rotational Carb */}
+                        <div className="flex items-center justify-between bg-white p-3 rounded-xl border border-gray-100 shadow-2xs">
+                          <div className="flex items-center gap-2.5">
+                            <span className="text-lg">🌾</span>
+                            <div>
+                              <span className="font-semibold text-gray-800 block">{meal.items.carb.name}</span>
+                              <span className="text-[10px] text-gray-400">Clean Sustained Fuel</span>
+                            </div>
+                          </div>
+                          <span className="text-xs font-semibold text-gray-700 bg-gray-100 px-2.5 py-1 rounded-lg">
+                            {meal.items.carb.grams}g
+                          </span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              {/* Fixed Bottom Action Bar */}
+              <div className="p-4 sm:p-5 bg-white border-t border-gray-200 shrink-0 flex flex-col sm:flex-row items-center justify-between gap-3 shadow-lg z-20">
+                <div className="hidden sm:block">
+                  <span className="text-[11px] text-gray-400 uppercase tracking-wider block font-bold">
+                    Doorstep Coimbatore Delivery
+                  </span>
+                  <div className="flex items-baseline gap-2 mt-0.5">
+                    <span className="font-heading font-black text-2xl text-gray-900 leading-none">
+                      ₹{weeklyPrice}
+                    </span>
+                    <span className="text-xs text-gray-500 font-medium">
+                      /box on weekly plan • or ₹{price} single trial
+                    </span>
+                  </div>
+                </div>
+
+                <div className="w-full sm:w-auto flex items-center gap-2.5">
+                  <Link
+                    href={`/weekly?diet=${diet}`}
+                    onClick={() => setShowDetailsModal(false)}
+                    className="flex-1 sm:flex-initial bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs sm:text-sm py-3 px-5 rounded-2xl transition-all shadow-md text-center flex items-center justify-center gap-1.5 tap-active"
+                  >
+                    <Sparkles className="w-4 h-4" />
+                    <span>Subscribe Weekly (₹{weeklyPrice}/box)</span>
+                  </Link>
+                  <Link
+                    href={orderUrl}
+                    onClick={() => setShowDetailsModal(false)}
+                    className="flex-1 sm:flex-initial bg-gray-900 hover:bg-[#124233] text-white font-bold text-xs sm:text-sm py-3 px-5 rounded-2xl transition-all text-center flex items-center justify-center gap-1.5 tap-active"
+                  >
+                    <span>Order Single (₹{price})</span>
+                    <ArrowRight className="w-4 h-4" />
+                  </Link>
+                </div>
+              </div>
+            </div>
+          </div>
+        )}
+
+        {/* Purchase Options Modal */}
+        {showPurchaseModal && (
+          <div
+            className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-xs animate-in fade-in duration-150"
+            onClick={() => setShowPurchaseModal(false)}
+          >
+            <div
+              className="bg-white rounded-3xl max-w-md w-full p-6 shadow-2xl relative border border-gray-100 overflow-hidden text-left"
+              onClick={(e) => e.stopPropagation()}
+            >
+              {/* Close Button */}
+              <button
+                type="button"
+                onClick={() => setShowPurchaseModal(false)}
+                className="absolute top-4 right-4 p-2 rounded-full text-gray-400 hover:text-gray-700 hover:bg-gray-100 transition-colors cursor-pointer"
+                aria-label="Close"
+              >
+                <X className="w-5 h-5" />
+              </button>
+
+              {/* Meal Summary Header */}
+              <div className="flex items-center gap-3 pr-8 pb-4 border-b border-gray-100">
+                <div className="relative w-14 h-14 rounded-2xl overflow-hidden shrink-0 bg-gray-100 border border-gray-200">
+                  <Image
+                    src={mainItem.image}
+                    alt={mainItem.name}
+                    fill
+                    className="object-cover"
+                  />
+                </div>
+                <div>
+                  <div className="flex items-center gap-1.5">
+                    <span
+                      className={cn(
+                        "text-[10px] font-bold px-2 py-0.5 rounded-full uppercase tracking-wider",
+                        diet === 'veg'
+                          ? "bg-emerald-50 text-emerald-700 border border-emerald-200"
+                          : "bg-red-50 text-red-700 border border-red-200"
+                      )}
+                    >
+                      {diet === 'veg' ? 'Pure Veg' : 'Non-Veg'}
+                    </span>
+                    <span className="text-xs text-gray-500 font-semibold">
+                      {dayInfo?.dayName || 'Day Special'}
+                    </span>
+                  </div>
+                  <h3 className="font-heading font-black text-base text-gray-900 mt-0.5 line-clamp-1">
+                    {mainItem.name}
+                  </h3>
+                </div>
+              </div>
+
+              {/* Options Header */}
+              <div className="mt-4 mb-3">
+                <h4 className="font-heading font-black text-lg text-gray-900">
+                  Choose Purchase Option
+                </h4>
+                <p className="text-xs text-gray-500 mt-0.5">
+                  Get the box on weekly subscription or order as a single trial.
+                </p>
+              </div>
+
+              {/* Options Grid/List */}
+              <div className="space-y-3">
+                {/* 1. Weekly Subscription (Recommended - Lowest Price) */}
+                <Link
+                  href={`/weekly?diet=${diet}`}
+                  onClick={() => setShowPurchaseModal(false)}
+                  className="group block p-4 rounded-2xl border-2 border-emerald-600 bg-emerald-50/40 hover:bg-emerald-50 transition-all text-left relative shadow-xs hover:shadow-md"
+                >
+                  <div className="flex items-start justify-between gap-2">
+                    <div>
+                      <div className="flex items-center gap-1.5">
+                        <span className="bg-emerald-600 text-white text-[10px] font-black px-2 py-0.5 rounded-full uppercase tracking-wider flex items-center gap-1">
+                          <Sparkles className="w-3 h-3" /> Best Value
+                        </span>
+                        <span className="text-[11px] font-bold text-emerald-800">
+                          Weekly Plan
+                        </span>
+                      </div>
+                      <p className="font-heading font-black text-base text-gray-900 mt-1">
+                        6-Day Subscription
+                      </p>
+                      <p className="text-xs text-gray-600 mt-0.5 leading-relaxed">
+                        Full routine (Mon–Sat) with free delivery & skip-anytime flexibility.
+                      </p>
+                    </div>
+                    <div className="text-right shrink-0">
+                      <span className="text-[10px] text-gray-400 uppercase font-bold block">Only</span>
+                      <span className="font-heading font-black text-2xl text-emerald-700">
+                        ₹{weeklyPrice}
+                      </span>
+                      <span className="text-[10px] text-gray-500 font-semibold block">/box</span>
+                    </div>
+                  </div>
+
+                  <div className="mt-3 pt-2.5 border-t border-emerald-200/60 flex items-center justify-between">
+                    <span className="text-xs font-bold text-emerald-800">
+                      Save ₹{(price - weeklyPrice) * 6} every week
+                    </span>
+                    <span className="bg-emerald-600 group-hover:bg-emerald-700 text-white text-xs font-bold py-1.5 px-3 rounded-xl transition-colors flex items-center gap-1">
+                      <span>Subscribe at ₹{weeklyPrice}</span>
+                      <ArrowRight className="w-3.5 h-3.5" />
+                    </span>
+                  </div>
+                </Link>
+
+                {/* 2. Single Day Trial */}
+                <Link
+                  href={orderUrl}
+                  onClick={() => setShowPurchaseModal(false)}
+                  className="group block p-4 rounded-2xl border border-gray-200 bg-white hover:bg-gray-50/80 hover:border-gray-300 transition-all text-left relative shadow-2xs hover:shadow-xs"
+                >
+                  <div className="flex items-start justify-between gap-2">
+                    <div>
+                      <span className="text-[10px] font-bold text-gray-500 uppercase tracking-wider block">
+                        Single Day Trial
+                      </span>
+                      <p className="font-heading font-black text-base text-gray-900 mt-0.5">
+                        Single Box Only
+                      </p>
+                      <p className="text-xs text-gray-500 mt-0.5 leading-relaxed">
+                        Try just this box for {dayInfo?.dayName || 'the day'}. No subscription required.
+                      </p>
+                    </div>
+                    <div className="text-right shrink-0">
+                      <span className="text-[10px] text-gray-400 uppercase font-bold block">Price</span>
+                      <span className="font-heading font-black text-2xl text-gray-900">
+                        ₹{price}
+                      </span>
+                      <span className="text-[10px] text-gray-400 font-semibold block">single</span>
+                    </div>
+                  </div>
+
+                  <div className="mt-3 pt-2.5 border-t border-gray-100 flex items-center justify-between">
+                    <span className="text-xs text-gray-500">
+                      One-time order
+                    </span>
+                    <span className="bg-gray-900 group-hover:bg-primary text-white text-xs font-bold py-1.5 px-3 rounded-xl transition-colors flex items-center gap-1">
+                      <span>Order Single Box</span>
+                      <ArrowRight className="w-3.5 h-3.5" />
+                    </span>
+                  </div>
+                </Link>
+              </div>
+            </div>
+          </div>
+        )}
       </div>
     );
   }
@@ -371,28 +727,33 @@ export function CurvedBoxCard({
         </div>
       </div>
 
-      <div className="mt-5 pt-4 border-t border-gray-100 flex items-center justify-between">
+      <div className="mt-5 pt-4 border-t border-gray-100 flex items-center justify-between gap-2">
         <div>
           <span className="text-[10px] text-gray-400 uppercase tracking-wider block font-bold">
-            Daily Box Price
+            Get the box at
           </span>
-          <span className="font-heading font-black text-xl sm:text-2xl text-gray-900">
-            {formatCurrency(box.price)}
+          <div className="mt-0.5">
+            <span className="font-heading font-black text-2xl text-gray-900 leading-none">
+              ₹289
+            </span>
+          </div>
+          <span className="text-[10px] text-gray-400 font-medium block mt-0.5">
+            or {formatCurrency(box.price)} single trial
           </span>
         </div>
 
         <div className="flex items-center gap-2">
           <Link
-            href="/tomorrow"
+            href="/weekly"
             className="py-2.5 px-3.5 rounded-xl border border-gray-200 text-xs font-bold text-gray-700 hover:text-gray-900 hover:bg-gray-50 transition-all tap-active"
           >
             Details
           </Link>
           <Link
-            href="/tomorrow"
+            href="/weekly"
             className="bg-cta hover:bg-cta-hover text-white text-xs font-bold py-2.5 px-4 rounded-xl shadow-cta/25 hover:shadow-md hover:scale-105 transition-all tap-active flex items-center gap-1.5"
           >
-            <span>Order Trial</span>
+            <span>Get Box</span>
             <ArrowRight className="w-3.5 h-3.5" />
           </Link>
         </div>

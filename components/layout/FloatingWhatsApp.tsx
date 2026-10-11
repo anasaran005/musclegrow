@@ -12,8 +12,8 @@ export function FloatingWhatsApp() {
   const pathname = usePathname();
   const { isNavDrawerOpen } = useAppStore();
 
-  // Hide on admin routes or checkout
-  if (pathname === '/checkout' || pathname.startsWith('/admin')) {
+  // Hide on admin routes, checkout, tomorrow trial page, weekly plan page, or monthly plan page
+  if (pathname === '/checkout' || pathname === '/tomorrow' || pathname === '/weekly' || pathname === '/monthly' || pathname.startsWith('/admin')) {
     return null;
   }
 

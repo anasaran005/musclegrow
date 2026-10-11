@@ -3,66 +3,66 @@
     "day": "Mon",
     "boxId": "box-mon",
     "boxSlug": "power-chicken-box",
-    "boxName": "Power Chicken Box",
-    "price": 299,
-    "calories": 695,
-    "protein": 60,
+    "boxName": "Green Mint Chicken Box",
+    "price": 319,
+    "calories": 977,
+    "protein": 81,
     "isVeg": false,
-    "tag": "Kongu Pepper Chicken"
+    "tag": "Green Mint Chicken & Chapati"
   },
   {
     "day": "Tue",
     "boxId": "box-tue",
     "boxSlug": "paneer-balance-box",
-    "boxName": "Paneer Balance Box",
-    "price": 269,
-    "calories": 685,
-    "protein": 42,
+    "boxName": "Smashed Soya Chunks Box",
+    "price": 289,
+    "calories": 638,
+    "protein": 44,
     "isVeg": true,
-    "tag": "Paneer Bhurji & Ragi Dosa"
+    "tag": "Veggie Soya & Masala Oats"
   },
   {
     "day": "Wed",
     "boxId": "box-wed",
     "boxSlug": "lean-fish-box",
-    "boxName": "Lean Fish Box",
-    "price": 279,
-    "calories": 695,
-    "protein": 56,
+    "boxName": "Chicken Steak Box",
+    "price": 319,
+    "calories": 838,
+    "protein": 77,
     "isVeg": false,
-    "tag": "Tawa Masala Fish & Brown Rice"
+    "tag": "Chicken Steak & Green Gram"
   },
   {
     "day": "Thu",
     "boxId": "box-thu",
     "boxSlug": "tikka-chicken-box",
-    "boxName": "Tikka Chicken Box",
-    "price": 299,
-    "calories": 720,
-    "protein": 63,
+    "boxName": "Smashed Chicken Box",
+    "price": 319,
+    "calories": 839,
+    "protein": 76,
     "isVeg": false,
-    "tag": "Chicken Tikka & Peanut Sundal"
+    "tag": "Smashed Chicken & Oats Upma"
   },
   {
     "day": "Fri",
     "boxId": "box-fri",
     "boxSlug": "soya-strong-box",
-    "boxName": "Soya Strong Box",
-    "price": 269,
-    "calories": 715,
-    "protein": 51,
-    "isVeg": true,
-    "tag": "Soya Pepper Fry & Masala Oats"
+    "boxName": "Grilled Chicken Pongal Box",
+    "price": 319,
+    "calories": 898,
+    "protein": 81,
+    "isVeg": false,
+    "tag": "Grilled Chicken & Oats Pongal"
   },
   {
     "day": "Sat",
     "boxId": "box-sat",
     "boxSlug": "paneer-tikka-box",
-    "boxName": "Paneer Tikka Box",
-    "price": 269,
-    "calories": 725,
-    "protein": 43,
-    "isVeg": true,
-    "tag": "Paneer Tikka & Millet Rice"
+    "boxName": "Grilled Mackerel Box",
+    "price": 319,
+    "calories": 808,
+    "protein": 59,
+    "isVeg": false,
+    "tag": "Grilled Mackerel & Green Peas"
   }
 ]

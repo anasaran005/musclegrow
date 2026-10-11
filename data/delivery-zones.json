@@ -1,86 +1,156 @@
 [
   {
+    "pincode": "641008",
+    "area": "Kuniyamuthur",
+    "isDeliverable": true,
+    "tier": "core",
+    "deliveryFee": 0,
+    "distanceKm": 0.0,
+    "avgDeliveryMinutes": 15,
+    "slots": ["12:00 PM - 1:30 PM", "7:00 PM - 8:30 PM"],
+    "description": "Central Kitchen Hub (Semmozhi Nagar) • Instant Priority Dispatch • Free Delivery"
+  },
+  {
+    "pincode": "641042",
+    "area": "Kovaipudhur",
+    "isDeliverable": true,
+    "tier": "core",
+    "deliveryFee": 0,
+    "distanceKm": 2.6,
+    "avgDeliveryMinutes": 20,
+    "slots": ["12:00 PM - 1:30 PM", "7:00 PM - 8:30 PM"],
+    "description": "Kovaipudhur Township & Ashram area • Daily insulated delivery • Free Delivery"
+  },
+  {
+    "pincode": "641001",
+    "area": "Ukkadam",
+    "isDeliverable": true,
+    "tier": "core",
+    "deliveryFee": 0,
+    "distanceKm": 3.6,
+    "avgDeliveryMinutes": 20,
+    "slots": ["12:00 PM - 1:30 PM", "7:00 PM - 8:30 PM"],
+    "description": "Ukkadam Lake & Bypass stretch • Hot insulated box delivery • Free Delivery"
+  },
+  {
+    "pincode": "641024",
+    "area": "Sundarapuram",
+    "isDeliverable": true,
+    "tier": "core",
+    "deliveryFee": 0,
+    "distanceKm": 3.5,
+    "avgDeliveryMinutes": 20,
+    "slots": ["12:00 PM - 1:30 PM", "7:00 PM - 8:30 PM"],
+    "description": "Pollachi Main Road & SIDCO corridor • Express dispatch • Free Delivery"
+  },
+  {
     "pincode": "641002",
     "area": "RS Puram",
     "isDeliverable": true,
-    "avgDeliveryMinutes": 25,
-    "slots": ["12:00 PM - 1:30 PM", "7:00 PM - 8:30 PM"]
-  },
-  {
-    "pincode": "641011",
-    "area": "Saibaba Colony",
-    "isDeliverable": true,
-    "avgDeliveryMinutes": 25,
-    "slots": ["12:00 PM - 1:30 PM", "7:00 PM - 8:30 PM"]
-  },
-  {
-    "pincode": "641004",
-    "area": "Peelamedu",
-    "isDeliverable": true,
+    "tier": "phase2",
+    "deliveryFee": 35,
+    "distanceKm": 5.7,
     "avgDeliveryMinutes": 30,
-    "slots": ["12:00 PM - 1:30 PM", "7:00 PM - 8:30 PM"]
-  },
-  {
-    "pincode": "641012",
-    "area": "Gandhipuram",
-    "isDeliverable": true,
-    "avgDeliveryMinutes": 20,
-    "slots": ["12:00 PM - 1:30 PM", "7:00 PM - 8:30 PM"]
+    "slots": ["12:00 PM - 1:30 PM", "7:00 PM - 8:30 PM"],
+    "description": "Phase 2 Zone (5.7 km) • ₹35 Delivery Fee applies"
   },
   {
     "pincode": "641018",
     "area": "Race Course",
     "isDeliverable": true,
-    "avgDeliveryMinutes": 20,
-    "slots": ["12:00 PM - 1:30 PM", "7:00 PM - 8:30 PM"]
-  },
-  {
-    "pincode": "641005",
-    "area": "Singanallur",
-    "isDeliverable": true,
-    "avgDeliveryMinutes": 35,
-    "slots": ["12:00 PM - 1:30 PM", "7:00 PM - 8:30 PM"]
-  },
-  {
-    "pincode": "641041",
-    "area": "Vadavalli",
-    "isDeliverable": true,
-    "avgDeliveryMinutes": 35,
-    "slots": ["12:00 PM - 1:30 PM", "7:00 PM - 8:30 PM"]
-  },
-  {
-    "pincode": "641035",
-    "area": "Saravanampatti (IT Corridor)",
-    "isDeliverable": true,
-    "avgDeliveryMinutes": 40,
-    "slots": ["12:00 PM - 1:30 PM", "7:00 PM - 8:30 PM"]
-  },
-  {
-    "pincode": "641006",
-    "area": "Ganapathy",
-    "isDeliverable": true,
-    "avgDeliveryMinutes": 30,
-    "slots": ["12:00 PM - 1:30 PM", "7:00 PM - 8:30 PM"]
-  },
-  {
-    "pincode": "641008",
-    "area": "Kuniyamuthur",
-    "isDeliverable": true,
-    "avgDeliveryMinutes": 35,
-    "slots": ["12:00 PM - 1:30 PM", "7:00 PM - 8:30 PM"]
+    "tier": "phase2",
+    "deliveryFee": 35,
+    "distanceKm": 5.7,
+    "avgDeliveryMinutes": 25,
+    "slots": ["12:00 PM - 1:30 PM", "7:00 PM - 8:30 PM"],
+    "description": "Phase 2 Zone (5.7 km) • ₹35 Delivery Fee applies"
   },
   {
     "pincode": "641045",
     "area": "Ramanathapuram",
     "isDeliverable": true,
-    "avgDeliveryMinutes": 25,
-    "slots": ["12:00 PM - 1:30 PM", "7:00 PM - 8:30 PM"]
+    "tier": "phase2",
+    "deliveryFee": 35,
+    "distanceKm": 6.0,
+    "avgDeliveryMinutes": 30,
+    "slots": ["12:00 PM - 1:30 PM", "7:00 PM - 8:30 PM"],
+    "description": "Phase 2 Zone (6.0 km) • ₹35 Delivery Fee applies"
   },
   {
-    "pincode": "641014",
-    "area": "Hopes College / Civil Aerodrome",
+    "pincode": "641012",
+    "area": "Gandhipuram",
     "isDeliverable": true,
+    "tier": "phase2",
+    "deliveryFee": 35,
+    "distanceKm": 6.9,
+    "avgDeliveryMinutes": 30,
+    "slots": ["12:00 PM - 1:30 PM", "7:00 PM - 8:30 PM"],
+    "description": "Phase 2 Zone (6.9 km) • ₹35 Delivery Fee applies"
+  },
+  {
+    "pincode": "641011",
+    "area": "Saibaba Colony",
+    "isDeliverable": true,
+    "tier": "phase2",
+    "deliveryFee": 35,
+    "distanceKm": 7.8,
     "avgDeliveryMinutes": 35,
-    "slots": ["12:00 PM - 1:30 PM", "7:00 PM - 8:30 PM"]
+    "slots": ["12:00 PM - 1:30 PM", "7:00 PM - 8:30 PM"],
+    "description": "Phase 2 Zone (7.8 km) • ₹35 Delivery Fee applies"
+  },
+  {
+    "pincode": "641006",
+    "area": "Ganapathy",
+    "isDeliverable": true,
+    "tier": "phase2",
+    "deliveryFee": 35,
+    "distanceKm": 9.2,
+    "avgDeliveryMinutes": 35,
+    "slots": ["12:00 PM - 1:30 PM", "7:00 PM - 8:30 PM"],
+    "description": "Phase 2 Zone (9.2 km) • ₹35 Delivery Fee applies"
+  },
+  {
+    "pincode": "641005",
+    "area": "Singanallur",
+    "isDeliverable": true,
+    "tier": "phase2",
+    "deliveryFee": 35,
+    "distanceKm": 9.3,
+    "avgDeliveryMinutes": 35,
+    "slots": ["12:00 PM - 1:30 PM", "7:00 PM - 8:30 PM"],
+    "description": "Phase 2 Zone (9.3 km) • ₹35 Delivery Fee applies"
+  },
+  {
+    "pincode": "641004",
+    "area": "Peelamedu",
+    "isDeliverable": true,
+    "tier": "phase2",
+    "deliveryFee": 35,
+    "distanceKm": 9.8,
+    "avgDeliveryMinutes": 35,
+    "slots": ["12:00 PM - 1:30 PM", "7:00 PM - 8:30 PM"],
+    "description": "Phase 2 Zone (9.8 km) • ₹35 Delivery Fee applies"
+  },
+  {
+    "pincode": "641041",
+    "area": "Vadavalli",
+    "isDeliverable": true,
+    "tier": "phase2",
+    "deliveryFee": 35,
+    "distanceKm": 9.9,
+    "avgDeliveryMinutes": 40,
+    "slots": ["12:00 PM - 1:30 PM", "7:00 PM - 8:30 PM"],
+    "description": "Phase 2 Zone (9.9 km) • ₹35 Delivery Fee applies"
+  },
+  {
+    "pincode": "641035",
+    "area": "Saravanampatti (IT Corridor)",
+    "isDeliverable": false,
+    "tier": "out-of-range",
+    "deliveryFee": 0,
+    "distanceKm": 14.4,
+    "avgDeliveryMinutes": 45,
+    "slots": ["12:00 PM - 1:30 PM", "7:00 PM - 8:30 PM"],
+    "description": "Beyond 10km radius (14.4 km) • Expansion Phase 3 Coming Soon"
   }
 ]

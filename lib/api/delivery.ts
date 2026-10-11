@@ -17,10 +17,17 @@ export async function checkPincode(pincode: string): Promise<{
   const zone = (zonesData as DeliveryZone[]).find((z) => z.pincode === cleanPin);
 
   if (zone && zone.isDeliverable) {
+    if (zone.tier === 'phase2') {
+      return {
+        deliverable: true,
+        zone,
+        message: `Great news! We deliver fresh to ${zone.area} (${zone.pincode}) on our Phase 2 route (within 10km) with a ₹${zone.deliveryFee ?? 35} delivery fee.`,
+      };
+    }
     return {
       deliverable: true,
       zone,
-      message: `Great news! We deliver fresh to ${zone.area} (${zone.pincode}) twice daily with free delivery.`,
+      message: `Great news! We deliver fresh to ${zone.area} (${zone.pincode}) twice daily with free doorstep delivery.`,
     };
   }
 
